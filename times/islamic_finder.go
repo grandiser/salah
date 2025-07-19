@@ -60,11 +60,11 @@ type IslamicFinder struct {
 	} `json:"location"`
 }
 
-func IslamicFinderAPI(user_ip string) (IslamicFinder, error) {
-	var base_api string = "https://www.islamicfinder.us/index.php/api/prayer_times"
-	var ip_api string = base_api + "?user_ip=" + user_ip
+func IslamicFinderAPI(userIp string) (IslamicFinder, error) {
+	var baseApi string = "https://www.islamicfinder.us/index.php/api/prayer_times"
+	var ipApi string = baseApi + "?user_ip=" + userIp
 
-	resp, err := http.Get(ip_api)
+	resp, err := http.Get(ipApi)
 
 	if err != nil {
 		panic(err)
@@ -72,22 +72,27 @@ func IslamicFinderAPI(user_ip string) (IslamicFinder, error) {
 
 	body, err := io.ReadAll(resp.Body)
 
-	defer resp.Body.Close()
-
 	if err != nil {
 		panic(err)
 	}
+
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(resp.Body)
 
 	if resp.StatusCode != 200 {
 		panic("Islamic Finder API Not Available. Pass in City name using --city 'city_name'")
 	}
 
-	var islamic_finder IslamicFinderAPIResponse
-	err = json.Unmarshal(body, &islamic_finder)
+	var islamicFinder IslamicFinderAPIResponse
+	err = json.Unmarshal(body, &islamicFinder)
 
 	return IslamicFinder{
-		Results:  islamic_finder.Results,
-		Location: islamic_finder.Settings.Location,
+		Results:  islamicFinder.Results,
+		Location: islamicFinder.Settings.Location,
 	}, err
 
 }

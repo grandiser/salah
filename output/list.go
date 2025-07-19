@@ -9,7 +9,7 @@ type Prayer struct {
 	Time string
 }
 
-func OutputListAladhan(aladhanTimes times.AladhanAPIResponse) {
+func ListAladhan(aladhanTimes times.AladhanAPIResponse) {
 	prayers := []Prayer{
 		{"Fajr", aladhanTimes.Data.Timings.Fajr},
 		{"Sunrise", aladhanTimes.Data.Timings.Sunrise},
@@ -25,7 +25,7 @@ func OutputListAladhan(aladhanTimes times.AladhanAPIResponse) {
 	ShowPrayerTimes(curPrayer, nextPrayer, prayers)
 }
 
-func OutputListIslamicFinder(islamicFinderTimes times.IslamicFinder) {
+func ListIslamicFinder(islamicFinderTimes times.IslamicFinder) {
 	prayers := []Prayer{
 		{"Fajr", islamicFinderTimes.Results.Fajr},
 		{"Sunrise", islamicFinderTimes.Results.Duha},
