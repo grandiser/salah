@@ -3,7 +3,6 @@ package times
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fatih/color"
 	"github.com/grandiser/salah/geo"
 	"io"
 	"net/http"
@@ -167,32 +166,4 @@ func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIRespon
 	}
 
 	return aladhan, err
-}
-
-func OutputListAladhan(aladhanTimes AladhanAPIResponse) {
-	fajr := &aladhanTimes.Data.Timings.Fajr
-	sunrise := &aladhanTimes.Data.Timings.Sunrise
-	dhuhr := &aladhanTimes.Data.Timings.Dhuhr
-	asr := &aladhanTimes.Data.Timings.Asr
-	maghrib := &aladhanTimes.Data.Timings.Maghrib
-	isha := &aladhanTimes.Data.Timings.Isha
-
-	today := time.Now().Format("Monday, January 2 2006")
-	//curTime := time.Now()
-
-	formatter := "   %-7s : %s\n"
-
-	datePrint := color.New(color.FgMagenta, color.Bold).PrintFunc()
-	curPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
-	nextPrayerPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
-
-	datePrint("\nPrayer Times for " + today + "\n")
-	curPrayerPrint(formatter, "Fajr", *fajr)
-	nextPrayerPrint(formatter, "Sunrise", *sunrise)
-	fmt.Printf(formatter, "Dhuhr", *dhuhr)
-	fmt.Printf(formatter, "Asr", *asr)
-	fmt.Printf(formatter, "Maghrib", *maghrib)
-	fmt.Printf(formatter, "Isha", *isha)
-	fmt.Printf("\n")
-
 }

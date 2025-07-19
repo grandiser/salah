@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/grandiser/salah/geo"
 	"github.com/grandiser/salah/ip"
+	"github.com/grandiser/salah/output"
 	"github.com/grandiser/salah/times"
 	"log"
 	"os"
@@ -22,7 +23,8 @@ func autoBehavior(city string, country string, listAll bool) {
 			log.Fatalf("Error getting prayer times: %v", err)
 		}
 
-		times.OutputListAladhan(aladhanTimes)
+		output.ShowDate()
+		output.OutputListAladhan(aladhanTimes)
 		return
 	}
 
@@ -45,7 +47,8 @@ func autoBehavior(city string, country string, listAll bool) {
 		os.Exit(1)
 	}
 
-	times.OutputListAladhan(aladhanTimes)
+	output.ShowDate()
+	output.OutputListAladhan(aladhanTimes)
 }
 
 func cityBehavior(city string, listAll bool) {
@@ -62,7 +65,8 @@ func cityBehavior(city string, listAll bool) {
 		os.Exit(1)
 	}
 
-	times.OutputListAladhan(aladhanTimes)
+	output.ShowDate()
+	output.OutputListAladhan(aladhanTimes)
 }
 
 func cityCountryBehavior(city string, country string, listAll bool) {
@@ -83,11 +87,12 @@ func cityCountryBehavior(city string, country string, listAll bool) {
 			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 			os.Exit(1)
 		}
-
-		times.OutputListAladhan(aladhanTimes)
+		output.ShowDate()
+		output.OutputListAladhan(aladhanTimes)
 		return
 	}
-	times.OutputListAladhan(aladhanTimes)
+	output.ShowDate()
+	output.OutputListAladhan(aladhanTimes)
 }
 
 func main() {
