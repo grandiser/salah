@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func get_response_body_open_meteo(city string) string {
+func OpenMeteoAPI(city string) string {
 	var base_api string = "https://geocoding-api.open-meteo.com/v1/search?name="
 	var city_api string = base_api + city
 	resp, err := http.Get(city_api)
@@ -25,6 +25,6 @@ func get_response_body_open_meteo(city string) string {
 	return string(body)
 }
 
-func get_lat_long(body string) string {
+func GetLatLong(body string) string {
 	return "1"
 }
