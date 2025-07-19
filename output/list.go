@@ -1,8 +1,6 @@
 package output
 
 import (
-	"fmt"
-	"github.com/fatih/color"
 	"github.com/grandiser/salah/times"
 )
 
@@ -12,39 +10,32 @@ type Prayer struct {
 }
 
 func OutputListAladhan(aladhanTimes times.AladhanAPIResponse) {
-	fajr := &aladhanTimes.Data.Timings.Fajr
-	sunrise := &aladhanTimes.Data.Timings.Sunrise
-	dhuhr := &aladhanTimes.Data.Timings.Dhuhr
-	asr := &aladhanTimes.Data.Timings.Asr
-	maghrib := &aladhanTimes.Data.Timings.Maghrib
-	isha := &aladhanTimes.Data.Timings.Isha
-
 	prayers := []Prayer{
-		{"Fajr", *fajr},
-		{"Sunrise", *sunrise},
-		{"Dhuhr", *dhuhr},
-		{"Asr", *asr},
-		{"Maghrib", *maghrib},
-		{"Isha", *isha},
+		{"Fajr", aladhanTimes.Data.Timings.Fajr},
+		{"Sunrise", aladhanTimes.Data.Timings.Sunrise},
+		{"Dhuhr", aladhanTimes.Data.Timings.Dhuhr},
+		{"Asr", aladhanTimes.Data.Timings.Asr},
+		{"Maghrib", aladhanTimes.Data.Timings.Maghrib},
+		{"Isha", aladhanTimes.Data.Timings.Isha},
 	}
 
 	curPrayer, nextPrayer := GetCurrentPrayers(prayers)
 
-	formatter := "   %-7s : %s\n"
-	curPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
-	nextPrayerPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
+	ShowDate()
+	ShowPrayerTimes(curPrayer, nextPrayer, prayers)
+}
 
-	for _, prayer := range prayers {
-		if curPrayer == prayer.Name {
-			curPrayerPrint(formatter, curPrayer, prayer.Time)
-
-		} else if nextPrayer == prayer.Name {
-			nextPrayerPrint(formatter, nextPrayer, prayer.Time)
-
-		} else {
-			fmt.Printf(formatter, prayer.Name, prayer.Time)
-		}
+func OutputListIslamicFinder(islamicFinderTimes times.IslamicFinder) {
+	prayers := []Prayer{
+		{"Fajr", islamicFinderTimes.Results.Fajr},
+		{"Sunrise", islamicFinderTimes.Results.Duha},
+		{"Dhuhr", islamicFinderTimes.Results.Dhuhr},
+		{"Asr", islamicFinderTimes.Results.Asr},
+		{"Maghrib", islamicFinderTimes.Results.Maghrib},
+		{"Isha", islamicFinderTimes.Results.Isha},
 	}
-	fmt.Printf("\n")
 
+	curPrayer, nextPrayer := GetCurrentPrayers(prayers)
+	ShowDate()
+	ShowPrayerTimes(curPrayer, nextPrayer, prayers)
 }

@@ -2,10 +2,8 @@ package times
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
-	"time"
 )
 
 type IslamicFinderAPIResponse struct {
@@ -91,26 +89,5 @@ func IslamicFinderAPI(user_ip string) (IslamicFinder, error) {
 		Results:  islamic_finder.Results,
 		Location: islamic_finder.Settings.Location,
 	}, err
-
-}
-
-func OutputListIslamicFinder(islamicFinderTimes IslamicFinder) {
-	fajr := &islamicFinderTimes.Results.Fajr
-	sunrise := &islamicFinderTimes.Results.Duha
-	dhuhr := &islamicFinderTimes.Results.Dhuhr
-	asr := &islamicFinderTimes.Results.Asr
-	maghrib := &islamicFinderTimes.Results.Maghrib
-	isha := &islamicFinderTimes.Results.Isha
-
-	today := time.Now().Format("Monday, January 2 2006")
-
-	fmt.Println("Prayer Times for " + today + "\n")
-	fmt.Printf("   %-7s : %s\n", "Fajr", *fajr)
-	fmt.Printf("   %-7s : %s\n", "Sunrise", *sunrise)
-	fmt.Printf("   %-7s : %s\n", "Dhuhr", *dhuhr)
-	fmt.Printf("   %-7s : %s\n", "Asr", *asr)
-	fmt.Printf("   %-7s : %s\n", "Maghrib", *maghrib)
-	fmt.Printf("   %-7s : %s\n", "Isha", *isha)
-	fmt.Printf("\n")
 
 }

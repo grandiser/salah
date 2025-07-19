@@ -23,7 +23,6 @@ func autoBehavior(city string, country string, listAll bool) {
 			log.Fatalf("Error getting prayer times: %v", err)
 		}
 
-		output.ShowDate()
 		output.OutputListAladhan(aladhanTimes)
 		return
 	}
@@ -37,7 +36,8 @@ func autoBehavior(city string, country string, listAll bool) {
 			fmt.Println("Islamic Finder API Not Available (Public IP). Try again later")
 			os.Exit(1)
 		}
-		times.OutputListIslamicFinder(islamicFinderTimes)
+
+		output.OutputListIslamicFinder(islamicFinderTimes)
 		return
 	}
 
@@ -47,7 +47,6 @@ func autoBehavior(city string, country string, listAll bool) {
 		os.Exit(1)
 	}
 
-	output.ShowDate()
 	output.OutputListAladhan(aladhanTimes)
 }
 
@@ -65,7 +64,6 @@ func cityBehavior(city string, listAll bool) {
 		os.Exit(1)
 	}
 
-	output.ShowDate()
 	output.OutputListAladhan(aladhanTimes)
 }
 
@@ -87,11 +85,9 @@ func cityCountryBehavior(city string, country string, listAll bool) {
 			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 			os.Exit(1)
 		}
-		output.ShowDate()
 		output.OutputListAladhan(aladhanTimes)
 		return
 	}
-	output.ShowDate()
 	output.OutputListAladhan(aladhanTimes)
 }
 

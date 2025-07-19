@@ -1,6 +1,7 @@
 package output
 
 import (
+	"fmt"
 	"github.com/fatih/color"
 	"time"
 )
@@ -30,4 +31,23 @@ func GetCurrentPrayers(prayers []Prayer) (string, string) {
 		}
 	}
 	return "Error", "Error"
+}
+
+func ShowPrayerTimes(curPrayer string, nextPrayer string, prayers []Prayer) {
+	formatter := "   %-7s : %s\n"
+	curPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
+	nextPrayerPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
+
+	for _, prayer := range prayers {
+		if curPrayer == prayer.Name {
+			curPrayerPrint(formatter, curPrayer, prayer.Time)
+
+		} else if nextPrayer == prayer.Name {
+			nextPrayerPrint(formatter, nextPrayer, prayer.Time)
+
+		} else {
+			fmt.Printf(formatter, prayer.Name, prayer.Time)
+		}
+	}
+	fmt.Printf("\n")
 }
