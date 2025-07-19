@@ -186,7 +186,7 @@ func OutputListAladhan(aladhanTimes AladhanAPIResponse) {
 	curPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
 	nextPrayerPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
 
-	datePrint("Prayer Times for " + today + "\n")
+	datePrint("\nPrayer Times for " + today + "\n")
 	curPrayerPrint(formatter, "Fajr", *fajr)
 	nextPrayerPrint(formatter, "Sunrise", *sunrise)
 	fmt.Printf(formatter, "Dhuhr", *dhuhr)
