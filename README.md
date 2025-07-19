@@ -1,4 +1,4 @@
-# Prayer Times CLI
+# Salah - Prayer Times CLI Tool
 
 A simple command-line tool that automatically detects your location using your IP address and displays Islamic prayer times for your area.
 
