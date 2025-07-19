@@ -2,11 +2,13 @@ package times
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
-type IslamicFinder struct {
+type IslamicFinderAPIResponse struct {
 	Results struct {
 		Fajr    string `json:"Fajr"`
 		Duha    string `json:"Duha"`
@@ -44,6 +46,21 @@ type IslamicFinder struct {
 	} `json:"settings"`
 	Success bool `json:"success"`
 }
+type IslamicFinder struct {
+	Results struct {
+		Fajr    string `json:"Fajr"`
+		Duha    string `json:"Duha"`
+		Dhuhr   string `json:"Dhuhr"`
+		Asr     string `json:"Asr"`
+		Maghrib string `json:"Maghrib"`
+		Isha    string `json:"Isha"`
+	} `json:"results"`
+	Location struct {
+		City    string `json:"city"`
+		State   string `json:"state"`
+		Country string `json:"country"`
+	} `json:"location"`
+}
 
 func IslamicFinderAPI(user_ip string) (IslamicFinder, error) {
 	var base_api string = "https://www.islamicfinder.us/index.php/api/prayer_times"
@@ -67,9 +84,27 @@ func IslamicFinderAPI(user_ip string) (IslamicFinder, error) {
 		panic(err)
 	}
 
-	var islamic_finder IslamicFinder
+	var islamic_finder IslamicFinderAPIResponse
 	err = json.Unmarshal(body, &islamic_finder)
 
-	return islamic_finder, err
+	return IslamicFinder{
+		Results:  islamic_finder.Results,
+		Location: islamic_finder.Settings.Location,
+	}, err
+
+}
+
+func OutputListIslamicFinder(islamicFinderTimes IslamicFinder) {
+	fajr := &islamicFinderTimes.Results.Fajr
+	sunrise := &islamicFinderTimes.Results.Duha
+	dhuhr := &islamicFinderTimes.Results.Dhuhr
+	asr := &islamicFinderTimes.Results.Asr
+	maghrib := &islamicFinderTimes.Results.Maghrib
+	isha := &islamicFinderTimes.Results.Isha
+
+	today := time.Now()
+
+	fmt.Println(today)
+	fmt.Printf("Fajr: %s\nSunrise: %s\nDhuhr: %s\nAsr: %s\nMaghrib: %s\nIsha: %s\n", *fajr, *sunrise, *dhuhr, *asr, *maghrib, *isha)
 
 }

@@ -167,3 +167,18 @@ func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIRespon
 
 	return aladhan, err
 }
+
+func OutputListAladhan(aladhanTimes AladhanAPIResponse) {
+	fajr := &aladhanTimes.Data.Timings.Fajr
+	sunrise := &aladhanTimes.Data.Timings.Sunrise
+	dhuhr := &aladhanTimes.Data.Timings.Dhuhr
+	asr := &aladhanTimes.Data.Timings.Asr
+	maghrib := &aladhanTimes.Data.Timings.Maghrib
+	isha := &aladhanTimes.Data.Timings.Isha
+
+	today := time.Now().Format("Monday, January 2 2006")
+
+	fmt.Println("Date: " + today + "\n")
+	fmt.Printf("Fajr: %s\nSunrise: %s\nDhuhr: %s\nAsr: %s\nMaghrib: %s\nIsha: %s\n", *fajr, *sunrise, *dhuhr, *asr, *maghrib, *isha)
+
+}
