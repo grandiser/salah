@@ -6,11 +6,11 @@ import (
 	"net/http"
 )
 
-type IP struct {
+type IPAPIResponse struct {
 	Origin string `json:"origin"`
 }
 
-func LocalIpApi() string {
+func LocalIpApi() (string, error) {
 	resp, err := http.Get("https://httpbin.org/ip")
 
 	if err != nil {
@@ -29,7 +29,7 @@ func LocalIpApi() string {
 		panic(err)
 	}
 
-	var ip IP
+	var ip IPAPIResponse
 
 	err = json.Unmarshal(body, &ip)
 
@@ -37,6 +37,6 @@ func LocalIpApi() string {
 		panic(err)
 	}
 
-	return ip.Origin
+	return ip.Origin, err
 
 }
