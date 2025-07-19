@@ -102,9 +102,15 @@ func OutputListIslamicFinder(islamicFinderTimes IslamicFinder) {
 	maghrib := &islamicFinderTimes.Results.Maghrib
 	isha := &islamicFinderTimes.Results.Isha
 
-	today := time.Now()
+	today := time.Now().Format("Monday, January 2 2006")
 
-	fmt.Println(today)
-	fmt.Printf("Fajr: %s\nSunrise: %s\nDhuhr: %s\nAsr: %s\nMaghrib: %s\nIsha: %s\n", *fajr, *sunrise, *dhuhr, *asr, *maghrib, *isha)
+	fmt.Println("Prayer Times for " + today + "\n")
+	fmt.Printf("   %-7s : %s\n", "Fajr", *fajr)
+	fmt.Printf("   %-7s : %s\n", "Sunrise", *sunrise)
+	fmt.Printf("   %-7s : %s\n", "Dhuhr", *dhuhr)
+	fmt.Printf("   %-7s : %s\n", "Asr", *asr)
+	fmt.Printf("   %-7s : %s\n", "Maghrib", *maghrib)
+	fmt.Printf("   %-7s : %s\n", "Isha", *isha)
+	fmt.Printf("\n")
 
 }
