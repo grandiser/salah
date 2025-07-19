@@ -5,6 +5,8 @@ import (
 	"github.com/grandiser/salah/geo"
 	"github.com/grandiser/salah/ip"
 	"github.com/grandiser/salah/times"
+	"log"
+	"os"
 )
 import "flag"
 
@@ -33,31 +35,37 @@ func main() {
 
 		if err != nil {
 			fmt.Println("IP API Not Available. Attempting to use defaults")
-			aladhan_times, err := times.AladhanLocationAPI(*city, *country)
+			aladhanTimes, err := times.AladhanLocationAPI(*city, *country)
 
 			if err != nil {
 				fmt.Println("AlAdhan API Not Available (default location). Try again later")
-				panic(err)
+				log.Fatalf("Error getting prayer times: %v", err)
 			}
 
-			fmt.Printf("\n aladhan fajr time: " + aladhan_times.Data.Timings.Fajr)
+			fmt.Printf("\n aladhan fajr time: " + aladhanTimes.Data.Timings.Fajr)
+			return
 		}
 
 		location, err := geo.LocationAPI(userIp)
-
 		if err != nil {
 			fmt.Println("IP Encoding API Unavailable. Attempting to use IslamicFinder API with IP address")
-			islamic_finder_times, err := times.IslamicFinderAPI(userIp)
+			islamicFinderTimes, err := times.IslamicFinderAPI(userIp)
 
 			if err != nil {
 				fmt.Println("Islamic Finder API Not Available (Public IP). Try again later")
+				os.Exit(1)
 			}
-
-			fmt.Println("islamic finder fajr timr: " + islamic_finder_times.Results.Fajr)
+			fmt.Println("islamic finder fajr timr: " + islamicFinderTimes.Results.Fajr)
+			return
 		}
 
-		aladhan_times := times.AladhanCoordsAPI(location.Lat, location.Lon)
-		fmt.Printf("aladhan best fajr: " + aladhan_times.Data.Timings.Fajr)
+		aladhanTimes, err := times.AladhanCoordsAPI(location.Lat, location.Lon)
+		if err != nil {
+			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
+			os.Exit(1)
+		}
+
+		fmt.Printf("aladhan best fajr: " + aladhanTimes.Data.Timings.Fajr)
 	}
 
 	if cityProvided && !countryProvided {
@@ -65,36 +73,47 @@ func main() {
 
 		if err != nil {
 			fmt.Println("Geo Encoding API Not Available. Use both --city and --country flags")
+			os.Exit(1)
 		}
 
-		aladhan_times := times.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
+		aladhanTimes, err := times.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
+		if err != nil {
+			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
+			os.Exit(1)
+		}
 
-		fmt.Printf("aladhan: " + aladhan_times.Data.Timings.Fajr)
+		fmt.Printf("aladhan: " + aladhanTimes.Data.Timings.Fajr)
 	}
 
 	if !cityProvided && countryProvided {
 		fmt.Println("The --country flag is meant to be used alongside a --city flag, not on its own")
+		return
 	}
 
 	if cityProvided && countryProvided {
 		aladhanTimes, err := times.AladhanLocationAPI(*city, *country)
 
 		if err != nil {
-
 			fmt.Println("AlAdhan API Not Available (city + country). Attempting to encode city coordinates")
 			geoEncoding, err := geo.OpenMeteoAPI(*city)
 
 			if err != nil {
 				fmt.Println("Geo Encoding API Not Available. Try again later")
+				os.Exit(1)
 			}
 
-			aladhanTimes := times.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
-			fmt.Printf("aladhan: " + aladhanTimes.Data.Timings.Fajr)
-		}
+			aladhanTimes, err := times.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
 
+			if err != nil {
+				fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
+				os.Exit(1)
+			}
+
+			fmt.Printf("aladhan: " + aladhanTimes.Data.Timings.Fajr)
+			return
+		}
 		fmt.Println("aladhan fajr: " + aladhanTimes.Data.Timings.Fajr)
 	}
 
 	fmt.Printf("\nPrayer times for %s\n", *city)
-
 }

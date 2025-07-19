@@ -106,7 +106,7 @@ type AladhanAPIResponse struct {
 	} `json:"data"`
 }
 
-func AladhanCoordsAPI(latitude float64, longitude float64) AladhanAPIResponse {
+func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, error) {
 	year, month, day := time.Now().Date()
 	lat := strconv.FormatFloat(latitude, 'f', -1, 32)
 	lon := strconv.FormatFloat(longitude, 'f', -1, 32)
@@ -135,7 +135,7 @@ func AladhanCoordsAPI(latitude float64, longitude float64) AladhanAPIResponse {
 		panic(err)
 	}
 
-	return aladhan
+	return aladhan, err
 }
 
 func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIResponse, error) {
