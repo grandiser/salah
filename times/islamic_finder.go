@@ -74,12 +74,12 @@ func IslamicFinderAPI(user_ip string) (IslamicFinder, error) {
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		panic("Islamic Finder API Not Available. Pass in City name using --city 'city_name'")
-	}
-
 	if err != nil {
 		panic(err)
+	}
+
+	if resp.StatusCode != 200 {
+		panic("Islamic Finder API Not Available. Pass in City name using --city 'city_name'")
 	}
 
 	var islamic_finder IslamicFinderAPIResponse
