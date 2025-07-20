@@ -51,7 +51,7 @@ func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
 	}
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
 	ShowDate()
-	ShowTimesBetween(prevPrayer, nextPrayer, prayers, true, true)
+	ShowTimesBetween(prevPrayer, nextPrayer, prayers, true)
 	ShowNextPrayer(nextPrayer, prayers)
 }
 
@@ -67,7 +67,7 @@ func SingleIslamicFinder(islamicFinderTimes times.IslamicFinder) {
 
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
 	ShowDate()
-	ShowTimesBetween(prevPrayer, nextPrayer, prayers, true, true)
+	ShowTimesBetween(prevPrayer, nextPrayer, prayers, true)
 	ShowNextPrayer(nextPrayer, prayers)
 }
 

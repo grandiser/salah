@@ -66,47 +66,43 @@ func ShowNextPrayer(nextPrayer string, prayers []Prayer) {
 	fmt.Printf("\nError showing next prayer. Try again with --list flag")
 }
 
-func ShowTimesBetween(curPrayer string, nextPrayer string, prayers []Prayer, showElapsed bool, showRemaining bool) {
-	var prevPrayerTime string
+func ShowTimesBetween(prevPrayer string, nextPrayer string, prayers []Prayer, showRemaining bool) {
 	var nextPrayerTime string
+	timeFormat := "15:04"
 
 	for _, prayer := range prayers {
-		if curPrayer == prayer.Name {
-			prevPrayerTime = prayer.Time
-			fmt.Printf(prevPrayerTime)
-		}
 		if nextPrayer == prayer.Name {
 			nextPrayerTime = prayer.Time
-			fmt.Printf(nextPrayerTime)
 		}
 	}
 
-	nowTimeStr := time.Now().Format("15:03")
-
-	nowTime, err := time.Parse("15:03", nowTimeStr)
+	nowTimeStr := time.Now().Format(timeFormat)
+	nowTime, err := time.Parse(timeFormat, nowTimeStr)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	if showElapsed && showRemaining {
-		prevTime, err := time.Parse("15:03", prevPrayerTime)
+	nowTime.Format(timeFormat)
+
+	if showRemaining {
+		nextTime, err := time.Parse(timeFormat, nextPrayerTime)
 		if err != nil {
 			log.Fatalln(err)
 		}
 
-		nextTime, err := time.Parse("15:03", nextPrayerTime)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		timeElapsed := nowTime.Sub(prevTime).String()
 		timeRemaining := nextTime.Sub(nowTime).String()
+		if prevPrayer == "Isha" {
+			//TODO: FIX CONDTION SO THAT WHEN ITS BETWEEN ISHA AND FAJR THE TIME REMAINING ISNT 18HRS
+			fajrTime := nextTime.Add(10)
+			timeRemaining := nowTime.Sub(fajrTime).String()
+			fmt.Printf(timeRemaining)
+		}
 
-		timeElapsedPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
+		formatter := "   %-7s : %s\n"
 		timeRemainingPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
 
-		timeElapsedPrint(timeElapsed)
-		timeRemainingPrint(timeRemaining)
+		fmt.Printf("\n")
+		timeRemainingPrint(formatter, "Time Remaining: ", timeRemaining)
+		fmt.Printf("\n")
 	}
-
 }
