@@ -11,7 +11,7 @@ import (
 )
 import "flag"
 
-func autoBehavior(city string, country string, listAll bool) {
+func autoBehavior(city string, country string, nextOnly bool) {
 	userIp, err := ip.LocalIpApi()
 
 	if err != nil {
@@ -23,7 +23,7 @@ func autoBehavior(city string, country string, listAll bool) {
 			log.Fatalf("Error getting prayer times: %v", err)
 		}
 
-		output.AladhanHandler(aladhanTimes, listAll)
+		output.AladhanHandler(aladhanTimes, nextOnly)
 		return
 	}
 
@@ -37,7 +37,7 @@ func autoBehavior(city string, country string, listAll bool) {
 			os.Exit(1)
 		}
 
-		output.IslamicFinderHandler(islamicFinderTimes, listAll)
+		output.IslamicFinderHandler(islamicFinderTimes, nextOnly)
 		return
 	}
 
@@ -47,10 +47,10 @@ func autoBehavior(city string, country string, listAll bool) {
 		os.Exit(1)
 	}
 
-	output.AladhanHandler(aladhanTimes, listAll)
+	output.AladhanHandler(aladhanTimes, nextOnly)
 }
 
-func cityBehavior(city string, listAll bool) {
+func cityBehavior(city string, nextOnly bool) {
 	geoEncoding, err := geo.OpenMeteoAPI(city)
 
 	if err != nil {
@@ -64,10 +64,10 @@ func cityBehavior(city string, listAll bool) {
 		os.Exit(1)
 	}
 
-	output.AladhanHandler(aladhanTimes, listAll)
+	output.AladhanHandler(aladhanTimes, nextOnly)
 }
 
-func cityCountryBehavior(city string, country string, listAll bool) {
+func cityCountryBehavior(city string, country string, nextOnly bool) {
 	aladhanTimes, err := times.AladhanLocationAPI(city, country)
 
 	if err != nil {
@@ -85,16 +85,16 @@ func cityCountryBehavior(city string, country string, listAll bool) {
 			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 			os.Exit(1)
 		}
-		output.AladhanHandler(aladhanTimes, listAll)
+		output.AladhanHandler(aladhanTimes, nextOnly)
 		return
 	}
-	output.AladhanHandler(aladhanTimes, listAll)
+	output.AladhanHandler(aladhanTimes, nextOnly)
 }
 
 func main() {
-	city := flag.String("city", "montreal", "The city to get prayer times for.")
-	country := flag.String("country", "canada", "The country where the city is")
-	listAll := flag.Bool("list", false, "Show list output instead of next prayer")
+	city := flag.String("city", "", "The city to get prayer times for")
+	country := flag.String("country", "", "The country where the city is located")
+	nextOnly := flag.Bool("nextonly", false, "Show current prayer only")
 	flag.Parse()
 
 	var cityProvided bool
@@ -112,11 +112,11 @@ func main() {
 	})
 
 	if !cityProvided && !countryProvided {
-		autoBehavior(*city, *country, *listAll)
+		autoBehavior(*city, *country, *nextOnly)
 	}
 
 	if cityProvided && !countryProvided {
-		cityBehavior(*city, *listAll)
+		cityBehavior(*city, *nextOnly)
 	}
 
 	if !cityProvided && countryProvided {
@@ -125,6 +125,6 @@ func main() {
 	}
 
 	if cityProvided && countryProvided {
-		cityCountryBehavior(*city, *country, *listAll)
+		cityCountryBehavior(*city, *country, *nextOnly)
 	}
 }

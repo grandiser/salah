@@ -75,18 +75,18 @@ func SingleIslamicFinder(islamicFinderTimes times.IslamicFinder) {
 	ShowNextPrayer(nextPrayer, prayers)
 }
 
-func AladhanHandler(aladhanTimes times.AladhanAPIResponse, listAll bool) {
-	if !listAll {
-		ListAladhan(aladhanTimes)
-	} else {
+func AladhanHandler(aladhanTimes times.AladhanAPIResponse, nextOnly bool) {
+	if nextOnly {
 		SingleAladhan(aladhanTimes)
+	} else {
+		ListAladhan(aladhanTimes)
 	}
 }
 
-func IslamicFinderHandler(islamicFinderTimes times.IslamicFinder, listAll bool) {
-	if !listAll {
-		ListIslamicFinder(islamicFinderTimes)
-	} else {
+func IslamicFinderHandler(islamicFinderTimes times.IslamicFinder, nextOnly bool) {
+	if nextOnly {
 		SingleIslamicFinder(islamicFinderTimes)
+	} else {
+		ListIslamicFinder(islamicFinderTimes)
 	}
 }
