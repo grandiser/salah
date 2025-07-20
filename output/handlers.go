@@ -26,22 +26,6 @@ func ListAladhan(aladhanTimes times.AladhanAPIResponse) {
 	ShowPrayersList(prevPrayer, nextPrayer, prayers)
 }
 
-func ListIslamicFinder(islamicFinderTimes times.IslamicFinder) {
-	prayers := []Prayer{
-		{"Fajr", islamicFinderTimes.Results.Fajr},
-		{"Sunrise", islamicFinderTimes.Results.Duha},
-		{"Dhuhr", islamicFinderTimes.Results.Dhuhr},
-		{"Asr", islamicFinderTimes.Results.Asr},
-		{"Maghrib", islamicFinderTimes.Results.Maghrib},
-		{"Isha", islamicFinderTimes.Results.Isha},
-	}
-
-	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
-	ShowDateGregorian()
-	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
-	ShowPrayersList(prevPrayer, nextPrayer, prayers)
-}
-
 func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
 	prayers := []Prayer{
 		{"Fajr", aladhanTimes.Data.Timings.Fajr},
@@ -58,35 +42,10 @@ func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
 	ShowNextPrayer(nextPrayer, prayers)
 }
 
-func SingleIslamicFinder(islamicFinderTimes times.IslamicFinder) {
-	prayers := []Prayer{
-		{"Fajr", islamicFinderTimes.Results.Fajr},
-		{"Sunrise", islamicFinderTimes.Results.Duha},
-		{"Dhuhr", islamicFinderTimes.Results.Dhuhr},
-		{"Asr", islamicFinderTimes.Results.Asr},
-		{"Maghrib", islamicFinderTimes.Results.Maghrib},
-		{"Isha", islamicFinderTimes.Results.Isha},
-	}
-
-	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
-	ShowDateGregorian()
-	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
-	ShowPrevPrayer(prevPrayer, prayers)
-	ShowNextPrayer(nextPrayer, prayers)
-}
-
 func AladhanHandler(aladhanTimes times.AladhanAPIResponse, nextOnly bool) {
 	if nextOnly {
 		SingleAladhan(aladhanTimes)
 	} else {
 		ListAladhan(aladhanTimes)
-	}
-}
-
-func IslamicFinderHandler(islamicFinderTimes times.IslamicFinder, nextOnly bool) {
-	if nextOnly {
-		SingleIslamicFinder(islamicFinderTimes)
-	} else {
-		ListIslamicFinder(islamicFinderTimes)
 	}
 }
