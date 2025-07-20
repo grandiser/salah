@@ -33,7 +33,7 @@ func GetCurrentPrayers(prayers []Prayer) (string, string) {
 	return "Error", "Error"
 }
 
-func ShowPrayerTimes(curPrayer string, nextPrayer string, prayers []Prayer) {
+func ShowPrayersList(curPrayer string, nextPrayer string, prayers []Prayer) {
 	formatter := "   %-7s : %s\n"
 	curPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
 	nextPrayerPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
@@ -50,4 +50,32 @@ func ShowPrayerTimes(curPrayer string, nextPrayer string, prayers []Prayer) {
 		}
 	}
 	fmt.Printf("\n")
+}
+
+func ShowNextPrayer(nextPrayer string, prayers []Prayer) {
+	for _, prayer := range prayers {
+		if nextPrayer == prayer.Name {
+			formatter := "   %-7s : %s\n"
+			nextPrayerPrint := color.New(color.FgCyan, color.Bold).PrintfFunc()
+			nextPrayerTime := prayer.Time
+			nextPrayerPrint(formatter, nextPrayer, nextPrayerTime)
+			return
+		}
+	}
+	fmt.Printf("\nError showing next prayer. Try again with --list flag")
+}
+
+func ShowTimesBetween(curPrayer string, nextPrayer string, prayers []Prayer, timePaseed bool, timeRemaining bool) {
+	for _, prayer := range prayers {
+		if curPrayer == prayer.Name {
+			curPrayerTime := prayer.Time
+			fmt.Printf(curPrayerTime)
+		}
+		if nextPrayer == prayer.Name {
+			nextPrayerTime := prayer.Time
+			fmt.Printf(nextPrayerTime)
+		}
+		return
+	}
+
 }

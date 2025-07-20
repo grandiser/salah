@@ -23,7 +23,7 @@ func autoBehavior(city string, country string, listAll bool) {
 			log.Fatalf("Error getting prayer times: %v", err)
 		}
 
-		output.ListAladhan(aladhanTimes)
+		output.AladhanHandler(aladhanTimes, listAll)
 		return
 	}
 
@@ -37,7 +37,7 @@ func autoBehavior(city string, country string, listAll bool) {
 			os.Exit(1)
 		}
 
-		output.ListIslamicFinder(islamicFinderTimes)
+		output.IslamicFinderHandler(islamicFinderTimes, listAll)
 		return
 	}
 
@@ -47,7 +47,7 @@ func autoBehavior(city string, country string, listAll bool) {
 		os.Exit(1)
 	}
 
-	output.ListAladhan(aladhanTimes)
+	output.AladhanHandler(aladhanTimes, listAll)
 }
 
 func cityBehavior(city string, listAll bool) {
@@ -64,7 +64,7 @@ func cityBehavior(city string, listAll bool) {
 		os.Exit(1)
 	}
 
-	output.ListAladhan(aladhanTimes)
+	output.AladhanHandler(aladhanTimes, listAll)
 }
 
 func cityCountryBehavior(city string, country string, listAll bool) {
@@ -85,10 +85,10 @@ func cityCountryBehavior(city string, country string, listAll bool) {
 			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 			os.Exit(1)
 		}
-		output.ListAladhan(aladhanTimes)
+		output.AladhanHandler(aladhanTimes, listAll)
 		return
 	}
-	output.ListAladhan(aladhanTimes)
+	output.AladhanHandler(aladhanTimes, listAll)
 }
 
 func main() {
@@ -127,5 +127,4 @@ func main() {
 	if cityProvided && countryProvided {
 		cityCountryBehavior(*city, *country, *listAll)
 	}
-
 }
