@@ -21,7 +21,7 @@ func ListAladhan(aladhanTimes times.AladhanAPIResponse) {
 
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
 
-	ShowDate()
+	ShowDateGregorian()
 	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
 	ShowPrayersList(prevPrayer, nextPrayer, prayers)
 }
@@ -37,7 +37,7 @@ func ListIslamicFinder(islamicFinderTimes times.IslamicFinder) {
 	}
 
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
-	ShowDate()
+	ShowDateGregorian()
 	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
 	ShowPrayersList(prevPrayer, nextPrayer, prayers)
 }
@@ -52,7 +52,7 @@ func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
 		{"Isha", aladhanTimes.Data.Timings.Isha},
 	}
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
-	ShowDate()
+	ShowDateGregorian()
 	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
 	ShowPrevPrayer(prevPrayer, prayers)
 	ShowNextPrayer(nextPrayer, prayers)
@@ -69,7 +69,7 @@ func SingleIslamicFinder(islamicFinderTimes times.IslamicFinder) {
 	}
 
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
-	ShowDate()
+	ShowDateGregorian()
 	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
 	ShowPrevPrayer(prevPrayer, prayers)
 	ShowNextPrayer(nextPrayer, prayers)

@@ -3,16 +3,21 @@ package output
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/hablullah/go-hijri"
 	"log"
 	"strings"
 	"time"
 )
 
-func ShowDate() {
+func ShowDateGregorian() {
 	today := time.Now().Format("Monday, January 2 2006")
 	datePrint := color.New(color.FgMagenta, color.Bold).PrintFunc()
 
 	datePrint("\n " + today + "\n")
+}
+
+func ShowDateHijri() {
+
 }
 
 func GetCurrentPrayers(prayers []Prayer) (string, string) {

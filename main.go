@@ -26,19 +26,9 @@ func autoBehavior(city string, country string, nextOnly bool) {
 		output.AladhanHandler(aladhanTimes, nextOnly)
 		return
 	}
-
 	location, err := geo.LocationAPI(userIp)
 	if err != nil {
-		fmt.Println("IP Encoding API Unavailable. Attempting to use IslamicFinder API with IP address")
-		islamicFinderTimes, err := times.IslamicFinderAPI(userIp)
-
-		if err != nil {
-			fmt.Println("Islamic Finder API Not Available (Public IP). Try again later")
-			os.Exit(1)
-		}
-
-		output.IslamicFinderHandler(islamicFinderTimes, nextOnly)
-		return
+		fmt.Println("IP Encoding API Unavailable. Try again by specifying --city and --country flags")
 	}
 
 	aladhanTimes, err := times.AladhanCoordsAPI(location.Lat, location.Lon)
@@ -46,41 +36,39 @@ func autoBehavior(city string, country string, nextOnly bool) {
 		fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 		os.Exit(1)
 	}
-
 	output.AladhanHandler(aladhanTimes, nextOnly)
 }
 
 func cityBehavior(city string, nextOnly bool) {
 	geoEncoding, err := geo.OpenMeteoAPI(city)
-
 	if err != nil {
 		fmt.Println("Geo Encoding API Not Available. Use both --city and --country flags")
 		os.Exit(1)
 	}
-
 	aladhanTimes, err := times.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
 	if err != nil {
 		fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 		os.Exit(1)
 	}
-
 	output.AladhanHandler(aladhanTimes, nextOnly)
 }
 
 func cityCountryBehavior(city string, country string, nextOnly bool) {
 	aladhanTimes, err := times.AladhanLocationAPI(city, country)
 
-	if err != nil {
-		fmt.Println("AlAdhan API Not Available (city + country). Attempting to encode city coordinates")
-		geoEncoding, err := geo.OpenMeteoAPI(city)
+	// Default behavior using City and Country values
+	if err == nil {
+		output.AladhanHandler(aladhanTimes, nextOnly)
+		return
 
+	} else {
+		// Backup Call by GeoEncoding City and using latitude and longitude instead
+		geoEncoding, err := geo.OpenMeteoAPI(city)
 		if err != nil {
 			fmt.Println("Geo Encoding API Not Available. Try again later")
 			os.Exit(1)
 		}
-
 		aladhanTimes, err := times.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
-
 		if err != nil {
 			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 			os.Exit(1)
@@ -88,7 +76,6 @@ func cityCountryBehavior(city string, country string, nextOnly bool) {
 		output.AladhanHandler(aladhanTimes, nextOnly)
 		return
 	}
-	output.AladhanHandler(aladhanTimes, nextOnly)
 }
 
 func main() {
