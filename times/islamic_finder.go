@@ -94,5 +94,4 @@ func IslamicFinderAPI(userIp string) (IslamicFinder, error) {
 		Results:  islamicFinder.Results,
 		Location: islamicFinder.Settings.Location,
 	}, err
-
 }

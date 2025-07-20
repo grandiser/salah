@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -36,8 +37,8 @@ func GetCurrentPrayers(prayers []Prayer) (string, string) {
 
 func ShowPrayersList(curPrayer string, nextPrayer string, prayers []Prayer) {
 	formatter := "   %-7s : %s\n"
-	curPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
-	nextPrayerPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
+	curPrayerPrint := color.New(color.FgCyan, color.Bold).PrintfFunc()
+	nextPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
 
 	for _, prayer := range prayers {
 		if curPrayer == prayer.Name {
@@ -53,11 +54,24 @@ func ShowPrayersList(curPrayer string, nextPrayer string, prayers []Prayer) {
 	fmt.Printf("\n")
 }
 
+func ShowPrevPrayer(prevPrayer string, prayers []Prayer) {
+	for _, prayer := range prayers {
+		if prevPrayer == prayer.Name {
+			formatter := "   %-7s : %s\n"
+			nextPrayerPrint := color.New(color.FgCyan, color.Bold).PrintfFunc()
+			nextPrayerTime := prayer.Time
+			nextPrayerPrint(formatter, prevPrayer, nextPrayerTime)
+			return
+		}
+	}
+	fmt.Printf("\nError showing next prayer. Try again with --list flag")
+}
+
 func ShowNextPrayer(nextPrayer string, prayers []Prayer) {
 	for _, prayer := range prayers {
 		if nextPrayer == prayer.Name {
-			formatter := "   %-7s : %s\n"
-			nextPrayerPrint := color.New(color.FgCyan, color.Bold).PrintfFunc()
+			formatter := "   %-7s : %s\n\n"
+			nextPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
 			nextPrayerTime := prayer.Time
 			nextPrayerPrint(formatter, nextPrayer, nextPrayerTime)
 			return
@@ -66,7 +80,7 @@ func ShowNextPrayer(nextPrayer string, prayers []Prayer) {
 	fmt.Printf("\nError showing next prayer. Try again with --list flag")
 }
 
-func ShowTimesBetween(prevPrayer string, nextPrayer string, prayers []Prayer, showRemaining bool) {
+func ShowTimeRemaining(prevPrayer string, nextPrayer string, prayers []Prayer) {
 	var nextPrayerTime string
 	timeFormat := "15:04"
 
@@ -83,26 +97,23 @@ func ShowTimesBetween(prevPrayer string, nextPrayer string, prayers []Prayer, sh
 	}
 
 	nowTime.Format(timeFormat)
-
-	if showRemaining {
-		nextTime, err := time.Parse(timeFormat, nextPrayerTime)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		timeRemaining := nextTime.Sub(nowTime).String()
-		if prevPrayer == "Isha" {
-			//TODO: FIX CONDTION SO THAT WHEN ITS BETWEEN ISHA AND FAJR THE TIME REMAINING ISNT 18HRS
-			fajrTime := nextTime.Add(10)
-			timeRemaining := nowTime.Sub(fajrTime).String()
-			fmt.Printf(timeRemaining)
-		}
-
-		formatter := "   %-7s : %s\n"
-		timeRemainingPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
-
-		fmt.Printf("\n")
-		timeRemainingPrint(formatter, "Time Remaining: ", timeRemaining)
-		fmt.Printf("\n")
+	nextTime, err := time.Parse(timeFormat, nextPrayerTime)
+	if err != nil {
+		log.Fatalln(err)
 	}
+
+	timeRemaining := nextTime.Sub(nowTime).String()
+	formatter := "\n   %s%s%s\n\n"
+	timeRemainingPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
+
+	if prevPrayer == "Isha" && nextTime.Before(nowTime) {
+		// Next prayer is tomorrow, add 24 hours
+		tomorrow := nextTime.Add(24 * time.Hour)
+		timeRemaining = tomorrow.Sub(nowTime).String()
+	} else {
+		timeRemaining = nextTime.Sub(nowTime).String()
+	}
+	timeRemainingStr := strings.Replace(timeRemaining, "0s", "", 1)
+
+	timeRemainingPrint(formatter, timeRemainingStr, " until ", nextPrayer)
 }
