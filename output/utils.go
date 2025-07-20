@@ -3,6 +3,7 @@ package output
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"log"
 	"time"
 )
 
@@ -65,17 +66,47 @@ func ShowNextPrayer(nextPrayer string, prayers []Prayer) {
 	fmt.Printf("\nError showing next prayer. Try again with --list flag")
 }
 
-func ShowTimesBetween(curPrayer string, nextPrayer string, prayers []Prayer, timePaseed bool, timeRemaining bool) {
+func ShowTimesBetween(curPrayer string, nextPrayer string, prayers []Prayer, showElapsed bool, showRemaining bool) {
+	var prevPrayerTime string
+	var nextPrayerTime string
+
 	for _, prayer := range prayers {
 		if curPrayer == prayer.Name {
-			curPrayerTime := prayer.Time
-			fmt.Printf(curPrayerTime)
+			prevPrayerTime = prayer.Time
+			fmt.Printf(prevPrayerTime)
 		}
 		if nextPrayer == prayer.Name {
-			nextPrayerTime := prayer.Time
+			nextPrayerTime = prayer.Time
 			fmt.Printf(nextPrayerTime)
 		}
-		return
+	}
+
+	nowTimeStr := time.Now().Format("15:03")
+
+	nowTime, err := time.Parse("15:03", nowTimeStr)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	if showElapsed && showRemaining {
+		prevTime, err := time.Parse("15:03", prevPrayerTime)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		nextTime, err := time.Parse("15:03", nextPrayerTime)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		timeElapsed := nowTime.Sub(prevTime).String()
+		timeRemaining := nextTime.Sub(nowTime).String()
+
+		timeElapsedPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
+		timeRemainingPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
+
+		timeElapsedPrint(timeElapsed)
+		timeRemainingPrint(timeRemaining)
 	}
 
 }
