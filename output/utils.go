@@ -12,7 +12,7 @@ func ShowDate() {
 	today := time.Now().Format("Monday, January 2 2006")
 	datePrint := color.New(color.FgMagenta, color.Bold).PrintFunc()
 
-	datePrint("\n" + today + "\n")
+	datePrint("\n " + today + "\n")
 }
 
 func GetCurrentPrayers(prayers []Prayer) (string, string) {
@@ -114,6 +114,5 @@ func ShowTimeRemaining(prevPrayer string, nextPrayer string, prayers []Prayer) {
 		timeRemaining = nextTime.Sub(nowTime).String()
 	}
 	timeRemainingStr := strings.Replace(timeRemaining, "0s", "", 1)
-
 	timeRemainingPrint(formatter, timeRemainingStr, " until ", nextPrayer)
 }
