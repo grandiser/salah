@@ -1,122 +1,81 @@
 package output
 
 import (
-	"fmt"
-	"github.com/fatih/color"
 	"log"
+	"math"
 	"strings"
 	"time"
 )
 
-func ShowDateGregorian() {
-	today := time.Now().Format("Monday, January 2 2006")
-	datePrint := color.New(color.FgMagenta, color.Bold).PrintFunc()
+func ConvertStringToTime(timeStr string) time.Time {
+	timeFormat := "15:04"
 
-	datePrint("\n " + today + "\n")
+	timeTime, err := time.Parse(timeFormat, timeStr)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return timeTime
 }
 
-func ShowDateHijri() {
-
-}
-
-func GetCurrentPrayers(prayers []Prayer) (string, string) {
+func GetCurrentPrayers(prayers []Prayer) (prevPrayer Prayer, nextPrayer Prayer) {
 	now := time.Now()
 	curTime := now.Format("15:04")
 
 	for idx, prayer := range prayers {
-		curPrayerName, curPrayerTime := prayer.Name, prayer.Time
+		prevName, prevTime := prayer.Name, prayer.Time
 
 		if idx+1 == len(prayers) {
-			return curPrayerName, "Fajr"
+			prevPrayer = Prayer{prevName, prevTime}
+			nextPrayer = Prayer{"Fajr", prayers[0].Time}
+			return prevPrayer, nextPrayer
 		}
 
-		nextPrayerName, nextPrayerTime := prayers[idx+1].Name, prayers[idx+1].Time
+		nextName, nextTime := prayers[idx+1].Name, prayers[idx+1].Time
 
-		if curTime > curPrayerTime && curTime < nextPrayerTime {
-			return curPrayerName, nextPrayerName
+		if curTime > prevPrayer.Time && curTime < nextPrayer.Time {
+			prevPrayer = Prayer{prevName, prevTime}
+			nextPrayer = Prayer{nextName, nextTime}
+			return prevPrayer, nextPrayer
 		}
 	}
-	return "Error", "Error"
+	// fallback
+	return prayers[0], prayers[1]
 }
 
-func ShowPrayersList(curPrayer string, nextPrayer string, prayers []Prayer) {
-	formatter := "   %-7s : %s\n"
-	curPrayerPrint := color.New(color.FgCyan, color.Bold).PrintfFunc()
-	nextPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
+func GetLoadingSquares(prevPrayer Prayer, nextPrayer Prayer) string {
+	loaded := "▣"
+	unloaded := "▢"
 
-	for _, prayer := range prayers {
-		if curPrayer == prayer.Name {
-			curPrayerPrint(formatter, curPrayer, prayer.Time)
+	timeBetween := CalculateTimeDiff(prevPrayer, prevPrayer.Time, nextPrayer.Time)
+	timeRemaining := GetTimeRemaining(prevPrayer, nextPrayer)
+	nSquares := int(math.Ceil(float64((timeRemaining / timeBetween) * 10)))
 
-		} else if nextPrayer == prayer.Name {
-			nextPrayerPrint(formatter, nextPrayer, prayer.Time)
-
-		} else {
-			fmt.Printf(formatter, prayer.Name, prayer.Time)
-		}
-	}
-	fmt.Printf("\n")
+	loadingSquares := strings.Repeat(loaded, nSquares) + strings.Repeat(unloaded, 10-nSquares)
+	return loadingSquares
 }
 
-func ShowPrevPrayer(prevPrayer string, prayers []Prayer) {
-	for _, prayer := range prayers {
-		if prevPrayer == prayer.Name {
-			formatter := "   %-7s : %s\n"
-			nextPrayerPrint := color.New(color.FgCyan, color.Bold).PrintfFunc()
-			nextPrayerTime := prayer.Time
-			nextPrayerPrint(formatter, prevPrayer, nextPrayerTime)
-			return
-		}
-	}
-	fmt.Printf("\nError showing next prayer. Try again with --list flag")
-}
+func CalculateTimeDiff(prevPrayer Prayer, prevTimeStr string, nextTimeStr string) time.Duration {
+	prevTime := ConvertStringToTime(prevTimeStr)
+	nextTime := ConvertStringToTime(nextTimeStr)
 
-func ShowNextPrayer(nextPrayer string, prayers []Prayer) {
-	for _, prayer := range prayers {
-		if nextPrayer == prayer.Name {
-			formatter := "   %-7s : %s\n\n"
-			nextPrayerPrint := color.New(color.FgGreen, color.Bold).PrintfFunc()
-			nextPrayerTime := prayer.Time
-			nextPrayerPrint(formatter, nextPrayer, nextPrayerTime)
-			return
-		}
-	}
-	fmt.Printf("\nError showing next prayer. Try again with --list flag")
-}
+	timeDiff := nextTime.Sub(prevTime)
 
-func ShowTimeRemaining(prevPrayer string, nextPrayer string, prayers []Prayer) {
-	var nextPrayerTime string
-	timeFormat := "15:04"
-
-	for _, prayer := range prayers {
-		if nextPrayer == prayer.Name {
-			nextPrayerTime = prayer.Time
-		}
-	}
-
-	nowTimeStr := time.Now().Format(timeFormat)
-	nowTime, err := time.Parse(timeFormat, nowTimeStr)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	nowTime.Format(timeFormat)
-	nextTime, err := time.Parse(timeFormat, nextPrayerTime)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	timeRemaining := nextTime.Sub(nowTime).String()
-	formatter := "\n   %s%s%s\n\n"
-	timeRemainingPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
-
-	if prevPrayer == "Isha" && nextTime.Before(nowTime) {
+	if prevPrayer.Name == "Isha" && nextTime.Before(prevTime) {
 		// Next prayer is tomorrow, add 24 hours
 		tomorrow := nextTime.Add(24 * time.Hour)
-		timeRemaining = tomorrow.Sub(nowTime).String()
+		timeDiff = tomorrow.Sub(prevTime)
 	} else {
-		timeRemaining = nextTime.Sub(nowTime).String()
+		timeDiff = nextTime.Sub(prevTime)
 	}
-	timeRemainingStr := strings.Replace(timeRemaining, "0s", "", 1)
-	timeRemainingPrint(formatter, timeRemainingStr, " until ", nextPrayer)
+
+	return timeDiff
+}
+
+func GetTimeRemaining(prevPrayer Prayer, nextPrayer Prayer) time.Duration {
+	timeFormat := "15:04"
+
+	nowTimeStr := time.Now().Format(timeFormat)
+	timeRemaining := CalculateTimeDiff(prevPrayer, nowTimeStr, nextPrayer.Time)
+
+	return timeRemaining
 }

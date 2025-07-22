@@ -114,4 +114,16 @@ func main() {
 	if cityProvided && countryProvided {
 		cityCountryBehavior(*city, *country, *nextOnly)
 	}
+
+	//fmt.Println("       ﷽   ")
+	//fmt.Println("   ╭────────۩────────╮")
+	//fmt.Println("   │ Fajr    : 03:38 │")
+	//fmt.Println("   │ Sunrise : 05:27 │")
+	//fmt.Println("   │ Dhuhr   : 13:02 │")
+	//fmt.Println("   │ Asr     : 17:08 │")
+	//fmt.Println("   │ Maghrib : 20:36 │")
+	//fmt.Println("   │ Isha    : 22:24 │")
+	//fmt.Println("   ╰────────۞────────╯")
+	//
+	//fmt.Println("\n Next: Maghrib ▣▣▣▣▣▣▣▢▢▢ 34m\n")
 }

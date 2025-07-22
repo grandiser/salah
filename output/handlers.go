@@ -1,6 +1,7 @@
 package output
 
 import (
+	"fmt"
 	"github.com/grandiser/salah/times"
 )
 
@@ -21,9 +22,9 @@ func ListAladhan(aladhanTimes times.AladhanAPIResponse) {
 
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
 
-	ShowDateGregorian()
-	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
+	fmt.Printf("\n")
 	ShowPrayersList(prevPrayer, nextPrayer, prayers)
+	ShowPrayerLoader(prevPrayer, nextPrayer)
 }
 
 func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
@@ -36,10 +37,7 @@ func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
 		{"Isha", aladhanTimes.Data.Timings.Isha},
 	}
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
-	ShowDateGregorian()
-	ShowTimeRemaining(prevPrayer, nextPrayer, prayers)
-	ShowPrevPrayer(prevPrayer, prayers)
-	ShowNextPrayer(nextPrayer, prayers)
+	ShowPrayerLoader(prevPrayer, nextPrayer)
 }
 
 func AladhanHandler(aladhanTimes times.AladhanAPIResponse, nextOnly bool) {
