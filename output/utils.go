@@ -32,7 +32,7 @@ func GetCurrentPrayers(prayers []Prayer) (prevPrayer Prayer, nextPrayer Prayer) 
 
 		nextName, nextTime := prayers[idx+1].Name, prayers[idx+1].Time
 
-		if curTime > prevPrayer.Time && curTime < nextPrayer.Time {
+		if curTime > prevTime && curTime < nextTime {
 			prevPrayer = Prayer{prevName, prevTime}
 			nextPrayer = Prayer{nextName, nextTime}
 			return prevPrayer, nextPrayer
@@ -48,9 +48,9 @@ func GetLoadingSquares(prevPrayer Prayer, nextPrayer Prayer) string {
 
 	timeBetween := CalculateTimeDiff(prevPrayer, prevPrayer.Time, nextPrayer.Time)
 	timeRemaining := GetTimeRemaining(prevPrayer, nextPrayer)
-	nSquares := int(math.Ceil(float64((timeRemaining / timeBetween) * 10)))
+	nSquares := int(math.Ceil((float64(timeRemaining) / float64(timeBetween)) * 10))
 
-	loadingSquares := strings.Repeat(loaded, nSquares) + strings.Repeat(unloaded, 10-nSquares)
+	loadingSquares := strings.Repeat(loaded, 10-nSquares) + strings.Repeat(unloaded, nSquares)
 	return loadingSquares
 }
 
