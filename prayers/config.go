@@ -54,7 +54,7 @@ func ValidateConfig(config *Config) {
 			log.Fatalln(os.Stderr, "Warning: cannot leave 'City' value empty. Please enter your city in the config file.")
 		}
 		if config.City != "" && config.Country == "" {
-			fmt.Fprintln(os.Stderr, "Warning: leaving the 'Country' value empty may cause inaccurate results. Please enter your country in the config file.")
+			fmt.Fprintln(os.Stderr, "Warning: leaving the 'Country' value empty may cause inaccurate results.\nPlease enter your country in the config file or use the --country flag.")
 		}
 	}
 }
@@ -176,6 +176,12 @@ func ParseFlags() Flags {
 }
 
 func ApplyFlags(config *Config, flags Flags) {
+
+	if flags.City != "" {
+		config.LocateByIp = false
+		config.City = flags.City
+		config.Country = flags.Country
+	}
 
 	if flags.Country != "" {
 		if flags.City != "" {

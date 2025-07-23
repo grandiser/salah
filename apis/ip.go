@@ -7,15 +7,30 @@ import (
 	"net/http"
 )
 
+//todo: update to http://ip-api.com/json/
+
 type IPAPIResponse struct {
-	Origin string `json:"origin"`
+	Status      string  `json:"status"`
+	Country     string  `json:"country"`
+	CountryCode string  `json:"countryCode"`
+	Region      string  `json:"region"`
+	RegionName  string  `json:"regionName"`
+	City        string  `json:"city"`
+	Zip         string  `json:"zip"`
+	Lat         float64 `json:"lat"`
+	Lon         float64 `json:"lon"`
+	Timezone    string  `json:"timezone"`
+	Isp         string  `json:"isp"`
+	Org         string  `json:"org"`
+	As          string  `json:"as"`
+	Query       string  `json:"query"`
 }
 
-func LocalIpApi() (string, error) {
-	resp, err := http.Get("https://httpbin.org/ip")
+func LocalIpApi() (IPAPIResponse, error) {
+	resp, err := http.Get("http://ip-api.com/json/")
 
 	if err != nil {
-		return "", fmt.Errorf("failed to make HTTP request: %w", err)
+		return IPAPIResponse{}, fmt.Errorf("failed to make HTTP request: %w", err)
 	}
 
 	body, err := io.ReadAll(resp.Body)
@@ -23,11 +38,11 @@ func LocalIpApi() (string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("IP Detection API Unavailable (status: %d). Pass in City name using --city 'city'", resp.StatusCode)
+		return IPAPIResponse{}, fmt.Errorf("IP Detection API Unavailable (status: %d). Pass in City name using --city 'city'", resp.StatusCode)
 	}
 
 	if err != nil {
-		return "", fmt.Errorf("%w", err)
+		return IPAPIResponse{}, fmt.Errorf("%w", err)
 	}
 
 	var ip IPAPIResponse
@@ -35,9 +50,9 @@ func LocalIpApi() (string, error) {
 	err = json.Unmarshal(body, &ip)
 
 	if err != nil {
-		return "", fmt.Errorf("failed to unmarshal JSON response: %w", err)
+		return IPAPIResponse{}, fmt.Errorf("failed to unmarshal JSON response: %w", err)
 	}
 
-	return ip.Origin, err
+	return ip, err
 
 }

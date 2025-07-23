@@ -9,22 +9,15 @@ import (
 )
 
 func autoBehavior(config prayers.Config) {
-	userIp, err := apis.LocalIpApi()
+	IPLocResponse, err := apis.LocalIpApi()
 
 	if err != nil {
 		fmt.Println("IP API Not Available. Attempting to use defaults")
 		configLocationBehavior(config)
 		return
 	}
-	location, err := apis.LocationAPI(userIp)
 
-	if err != nil {
-		fmt.Println("IP Encoding API Unavailable. Trying with default location values in config")
-		configLocationBehavior(config)
-		return
-	}
-
-	aladhanTimes, err := apis.AladhanCoordsAPI(location.Lat, location.Lon)
+	aladhanTimes, err := apis.AladhanCoordsAPI(IPLocResponse.Lat, IPLocResponse.Lon)
 	if err != nil {
 		fmt.Println("IP Encoding API Unavailable. Trying with default location values in config")
 		configLocationBehavior(config)

@@ -25,18 +25,6 @@ type LocationAPIResponse struct {
 	Query       string  `json:"query"`
 }
 
-type Location struct {
-	Country     string  `json:"country"`
-	CountryCode string  `json:"countryCode"`
-	Region      string  `json:"region"`
-	RegionName  string  `json:"regionName"`
-	City        string  `json:"city"`
-	Zip         string  `json:"zip"`
-	Lat         float64 `json:"lat"`
-	Lon         float64 `json:"lon"`
-	Timezone    string  `json:"timezone"`
-}
-
 type GeoEncodingApiResponse struct {
 	Results []struct {
 		Id          int     `json:"id"`
@@ -67,7 +55,7 @@ type GeoEncoding struct {
 }
 
 func FixCityName(city string) string {
-	var corrected_city string = strings.ReplaceAll(city, " ", "+")
+	corrected_city := strings.ReplaceAll(city, " ", "+")
 
 	return corrected_city
 }
@@ -112,44 +100,4 @@ func OpenMeteoAPI(city string) (GeoEncoding, error) {
 		Longitude: result.Longitude,
 		Country:   result.Country,
 	}, nil
-}
-
-func LocationAPI(ip string) (Location, error) {
-	var apiCall = "http://ip-api.com/json/" + ip
-
-	resp, err := http.Get(apiCall)
-
-	if err != nil {
-		return Location{}, err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return Location{}, fmt.Errorf("IP to Location API Not Available.")
-	}
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return Location{}, err
-	}
-
-	var loc LocationAPIResponse
-	err = json.Unmarshal(body, &loc)
-	if err != nil {
-		return Location{}, err
-	}
-
-	return Location{
-		Country:     loc.Country,
-		CountryCode: loc.CountryCode,
-		Region:      loc.Region,
-		RegionName:  loc.RegionName,
-		City:        loc.City,
-		Zip:         loc.Zip,
-		Lat:         loc.Lat,
-		Lon:         loc.Lon,
-		Timezone:    loc.Timezone,
-	}, nil
-
 }
