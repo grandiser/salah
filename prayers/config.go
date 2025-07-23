@@ -11,14 +11,13 @@ import (
 )
 
 type Config struct {
-	City          string `toml:"city"`
-	Country       string `toml:"country"`
-	Compact       bool   `toml:"Compact"`
-	UseColors     bool   `toml:"useColors"`
-	UseArabic     bool   `toml:"useArabic"`
-	GregorianDate bool   `toml:"gregorianDate"`
-	HijriDate     bool   `toml:"hijriDate"`
-	LocateByIp    bool   `toml:"locateByIp"`
+	City       string `toml:"city"`
+	Country    string `toml:"country"`
+	Compact    bool   `toml:"Compact"`
+	UseColors  bool   `toml:"useColors"`
+	UseArabic  bool   `toml:"useArabic"`
+	HijriDate  bool   `toml:"hijriDate"`
+	LocateByIp bool   `toml:"locateByIp"`
 }
 
 type Flags struct {
@@ -30,24 +29,17 @@ type Flags struct {
 
 func GetDefaultConfig() Config {
 	return Config{
-		City:          "",
-		Country:       "",
-		Compact:       false,
-		UseColors:     true,
-		UseArabic:     false,
-		GregorianDate: true,
-		HijriDate:     false,
-		LocateByIp:    true,
+		City:       "",
+		Country:    "",
+		Compact:    false,
+		UseColors:  true,
+		UseArabic:  false,
+		HijriDate:  false,
+		LocateByIp: true,
 	}
 }
 
 func ValidateConfig(config *Config) {
-
-	if config.GregorianDate && config.HijriDate {
-		fmt.Fprintln(os.Stderr, "Warning: cannot set both 'GregorianDate' and 'HijriDate' values to 'true'.")
-		fmt.Fprintln(os.Stderr, "Using Gregorian Date as default.")
-		config.HijriDate = false
-	}
 
 	if !config.LocateByIp {
 		if config.City == "" {

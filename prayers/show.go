@@ -9,30 +9,22 @@ import (
 )
 
 func showDate(aladhanTimes apis.AladhanAPIResponse, config Config) {
+	var todayDate string
+
 	if config.HijriDate {
-		ShowDateHijri(aladhanTimes, config)
+		todayDate = GetHijriDate(aladhanTimes, config)
+	} else {
+		todayDate = time.Now().Format("Monday, January 2 2006")
 	}
-
-	if config.GregorianDate {
-		ShowDateGregorian()
-	}
+	formattedDate := DateFormatter(todayDate)
+	DatePrinter(formattedDate)
 
 }
 
-func ShowDateGregorian() {
-	today := time.Now().Format("Monday, January 2 2006")
-	datePrint := color.New(color.FgBlue, color.Bold).PrintFunc()
-	datePrint(" " + today + "\n")
-}
-
-func ShowDateHijri(aladhanTimes apis.AladhanAPIResponse, config Config) {
-	hijriDate := GetHijriDate(aladhanTimes, config)
-	hijriStr := fmt.Sprintf(" %s", hijriDate)
-	fmt.Println(boldColor256(27, hijriStr))
-}
 func ShowBasmalah() {
-	whitePrint := color.New(color.FgHiWhite, color.Bold).PrintFunc()
-	whitePrint("       ﷽   \n")
+	basmalah := "﷽"
+	formattedBasmalah := BasmalahFormatter(basmalah)
+	BasmalahPrinter(formattedBasmalah)
 }
 
 func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
@@ -64,9 +56,8 @@ func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
 }
 
 func ShowPrayerLoader(prevPrayer Prayer, nextPrayer Prayer) {
-	formatter := " Next: %s %s %s\n"
-	nextPrayerPrint := color.New(color.FgHiBlue, color.Bold).PrintfFunc()
 	timeRemaining := strings.Replace(GetTimeRemaining(prevPrayer, nextPrayer).String(), "0s", "", 1)
 	loadingSquares := GetLoadingSquares(prevPrayer, nextPrayer)
-	nextPrayerPrint(formatter, nextPrayer.Name, loadingSquares, timeRemaining)
+	formattedLoader := LoaderFormatter(nextPrayer.Name, loadingSquares, timeRemaining)
+	LoaderPrinter(formattedLoader)
 }
