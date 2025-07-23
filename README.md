@@ -22,7 +22,7 @@ Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 1. Option 1: Build from source:
 
 ```bash
-git clone https://github.com/grandiser/salah.git
+git clone github.com/grandiser/salah.git
 cd salah
 go build -o salah
 
