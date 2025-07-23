@@ -69,12 +69,3 @@ func ShowPrayerLoader(prevPrayer Prayer, nextPrayer Prayer) {
 	loadingSquares := GetLoadingSquares(prevPrayer, nextPrayer)
 	nextPrayerPrint(formatter, nextPrayer.Name, loadingSquares, timeRemaining)
 }
-
-func ShowTimeRemaining(prevPrayer Prayer, nextPrayer Prayer) {
-	timeRemainingPrint := color.New(color.FgYellow, color.Bold).PrintfFunc()
-	timeRemaining := GetTimeRemaining(prevPrayer, nextPrayer).String()
-	formatter := "\n %s%s%s\n"
-	timeRemainingStr := strings.Replace(timeRemaining, "0s", "", 1)
-	timeRemainingPrint(formatter, timeRemainingStr, " until ", nextPrayer.Name)
-
-}
