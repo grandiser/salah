@@ -1,9 +1,8 @@
-package times
+package apis
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/grandiser/salah/geo"
 	"io"
 	"net/http"
 	"strconv"
@@ -140,7 +139,7 @@ func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, 
 
 func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIResponse, error) {
 	year, month, day := time.Now().Date()
-	fixedCityName := geo.FixCityName(city_name)
+	fixedCityName := FixCityName(city_name)
 	date := fmt.Sprintf("%d-%d-%d", year, month, day)
 
 	var api_call string = fmt.Sprintf("https://api.aladhan.com/v1/timingsByCity/%s?city=%s&country=%s", date, fixedCityName, country_name)

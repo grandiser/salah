@@ -1,4 +1,4 @@
-package geo
+package apis
 
 import (
 	"encoding/json"

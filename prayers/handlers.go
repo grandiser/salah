@@ -1,8 +1,8 @@
-package output
+package prayers
 
 import (
 	"fmt"
-	"github.com/grandiser/salah/times"
+	"github.com/grandiser/salah/apis"
 )
 
 type Prayer struct {
@@ -10,7 +10,7 @@ type Prayer struct {
 	Time string
 }
 
-func ListAladhan(aladhanTimes times.AladhanAPIResponse) {
+func ListAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	prayers := []Prayer{
 		{"Fajr", aladhanTimes.Data.Timings.Fajr},
 		{"Sunrise", aladhanTimes.Data.Timings.Sunrise},
@@ -23,11 +23,13 @@ func ListAladhan(aladhanTimes times.AladhanAPIResponse) {
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
 
 	fmt.Printf("\n")
+	ShowBasmalah()
 	ShowPrayersList(prevPrayer, nextPrayer, prayers)
+	showDate(aladhanTimes, config)
 	ShowPrayerLoader(prevPrayer, nextPrayer)
 }
 
-func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
+func SingleAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	prayers := []Prayer{
 		{"Fajr", aladhanTimes.Data.Timings.Fajr},
 		{"Sunrise", aladhanTimes.Data.Timings.Sunrise},
@@ -37,13 +39,16 @@ func SingleAladhan(aladhanTimes times.AladhanAPIResponse) {
 		{"Isha", aladhanTimes.Data.Timings.Isha},
 	}
 	prevPrayer, nextPrayer := GetCurrentPrayers(prayers)
+
+	fmt.Printf("\n")
+	showDate(aladhanTimes, config)
 	ShowPrayerLoader(prevPrayer, nextPrayer)
 }
 
-func AladhanHandler(aladhanTimes times.AladhanAPIResponse, nextOnly bool) {
-	if nextOnly {
-		SingleAladhan(aladhanTimes)
+func AladhanHandler(aladhanTimes apis.AladhanAPIResponse, config Config) {
+	if config.Compact {
+		SingleAladhan(aladhanTimes, config)
 	} else {
-		ListAladhan(aladhanTimes)
+		ListAladhan(aladhanTimes, config)
 	}
 }

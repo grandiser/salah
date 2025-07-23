@@ -1,11 +1,36 @@
-package output
+package prayers
 
 import (
+	"fmt"
+	"github.com/fatih/color"
+	"github.com/grandiser/salah/apis"
 	"log"
 	"math"
 	"strings"
 	"time"
 )
+
+func GetHijriDate(aladhanTimes apis.AladhanAPIResponse, config Config) string {
+	// BUG: API Return Date Values Incorrect. Do not use until fixed.
+	// Fix request made to AladhanAPI team
+
+	var hijri string
+	dayNum := aladhanTimes.Data.Date.Hijri.Day
+
+	if config.UseArabic {
+		arMonth := aladhanTimes.Data.Date.Hijri.Month.Ar
+		year := aladhanTimes.Data.Date.Hijri.Year
+		arWeekday := aladhanTimes.Data.Date.Hijri.Weekday.Ar
+		hijri = fmt.Sprintf("%s، %s %s %s", arWeekday, dayNum, arMonth, year)
+	} else {
+		enMonth := aladhanTimes.Data.Date.Hijri.Month.En
+		year := aladhanTimes.Data.Date.Hijri.Year
+		enWeekday := aladhanTimes.Data.Date.Hijri.Weekday.En
+		format := " %s, %s %s %s"
+		hijri = fmt.Sprintf(format, enWeekday, dayNum, enMonth, year)
+	}
+	return color.New(color.FgCyan, color.Bold).Sprintf(hijri)
+}
 
 func ConvertStringToTime(timeStr string) time.Time {
 	timeFormat := "15:04"

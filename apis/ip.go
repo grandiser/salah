@@ -1,4 +1,4 @@
-package ip
+package apis
 
 import (
 	"encoding/json"
