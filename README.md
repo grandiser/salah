@@ -42,25 +42,25 @@ go install github.com/grandiser/salah@latest
 Run with default (auto-detect location):
 
 ```bash
-./salah
+salah
 ```
 
 Specify city and country:
 
 ```bash
-./salah --city "Casablanca" --country "Morocco"
+salah --city "Casablanca" --country "Morocco"
 ```
 
 Compact output:
 
 ```bash
-./salah --compact
+salah --compact
 ```
 
 Show help:
 
 ```bash
-./salah --help
+salah --help
 ```
 
 ---
@@ -80,12 +80,12 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 
 - `city`: Default city
 - `country`: Default country
-- `compact`: Compact output (true/false)
+- `compact`: Compact output
 - `useColors`: Enable/disable colored output
 - `useArabic`: Show Hijri date in Arabic
 - `gregorianDate`: Show Gregorian date
 - `hijriDate`: Show Hijri date
-- `locateByIp`: Use IP-based location (true/false)
+- `locateByIp`: Use IP-based location
 
 ---
 
@@ -123,5 +123,8 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 MIT License — see [LICENSE](LICENSE) for details.
 
 ---
+
+## Acknowledgements
+
 
 **Made with ❤️ for the Muslim community** 
