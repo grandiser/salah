@@ -1,90 +1,134 @@
-# Salah - Prayer Times CLI Tool
+# Salah
 
-A simple command-line tool that automatically detects your location using your IP address and displays Islamic prayer times for your area.
-
-## Features
-
-- 🌍 **Automatic location detection** - Uses your public IP to determine location
-- 🕌 **Complete prayer schedule** - Shows all 5 daily prayers plus Duha
-- ⚡ **Fast and lightweight** - Single binary with no dependencies
-- 🔒 **Privacy-focused** - No API keys or personal data required
-- 🌐 **Global support** - Works worldwide with accurate prayer times
-
-## Installation
-
-TBD
-
-## Usage
-
-Simply run the command:
-
-```bash
-salah
-```
-
-**Example output:**
-```
-📍 Location: New York, United States (40.7128, -74.0060)
-
-🕌 Prayer Times for Today:
-   Fajr    : 05:30 AM
-   Duha    : 07:15 AM
-   Dhuhr   : 12:45 PM
-   Asr     : 03:30 PM
-   Maghrib : 06:15 PM
-   Isha    : 07:30 PM
-
-Timezone: America/New_York
-```
-
-### Command Options
-
-```bash
-prayer-times --help        # Show help
-prayer-times --version     # Show version
-prayer-times --json        # Output in JSON format
-```
-
-## How It Works
-
-1. **IP Detection**: Gets your public IP address
-2. **Geolocation**: Converts IP to geographic coordinates using ip-api.com
-3. **Prayer Calculation**: Fetches accurate prayer times from IslamicFinder API
-4. **Display**: Shows formatted prayer times for your location
-
-## APIs Used
-
-- **IP Geolocation**: [ip-api.com](http://ip-api.com) (free, no key required)
-- **Prayer Times**: [IslamicFinder API](https://islamicfinder.us) (free, no key required)
-
-## Configuration
-
-No configuration needed! The tool works out of the box with sensible defaults:
-
-- **Calculation Method**: Islamic Society of North America (ISNA)
-- **Juristic Method**: Standard (Shafi, Maliki, Hanbali)
-- **Time Format**: 12-hour with AM/PM
-
-## Contributing
-
-Contributions welcome! Please feel free to:
-
-1. Report bugs via [GitHub Issues](https://github.com/yourusername/prayer-times/issues)
-2. Submit feature requests
-3. Create pull requests
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [ip-api.com](https://httpbin.org/ip) for free IP geolocation
-- [IslamicFinder](https://islamicfinder.us) for accurate prayer time calculations
-- The Go community for excellent tooling
+A fast, privacy-focused command-line tool to display Islamic prayer times for your location. Salah can automatically detect your location via your IP address, or you can specify your city and country for precise results.
 
 ---
 
-**Made with ❤️ for the Muslim community**
+## Features
 
-*"And establish prayer at the two ends of the day and at the approach of the night. Indeed, good deeds do away with misdeeds. That is a reminder for those who remember."* - Quran 11:114
+- 🌍 **Automatic location detection** (via IP address)
+- 🕌 **Accurate daily prayer times** (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha)
+- ⚡ **Fast, single-binary CLI** (written in Go)
+- 🔒 **No API keys or personal data required**
+- 🌐 **Works worldwide**
+- 🎨 **Colorful, clear terminal output**
+- 🗓️ **Hijri and Gregorian date support**
+- 🏷️ **Compact mode for minimal output**
+
+---
+
+## Installation
+
+1. **Build from source:**
+
+```bash
+git clone https://github.com/grandiser/salah.git
+cd salah
+go build -o salah
+```
+
+2. **Move to your PATH:**
+
+```bash
+sudo mv salah /usr/local/bin/
+```
+
+---
+
+## Usage
+
+Run with default (auto-detect location):
+
+```bash
+./salah
+```
+
+Specify city and country:
+
+```bash
+./salah --city "Casablanca" --country "Morocco"
+```
+
+Compact output:
+
+```bash
+./salah --compact
+```
+
+Show help:
+
+```bash
+./salah --help
+```
+
+---
+
+## Command-line Options
+
+- `--city <name>`: Specify city for prayer times
+- `--country <name>`: Specify country (must be used with --city)
+- `--compact`: Compact display mode
+- `--help`: Show help message
+
+---
+
+## Configuration
+
+A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppData%/salah/salah.toml` (Windows) on first run. You can edit this file to set defaults for:
+
+- `city`: Default city
+- `country`: Default country
+- `compact`: Compact output (true/false)
+- `useColors`: Enable/disable colored output
+- `useArabic`: Show Hijri date in Arabic
+- `gregorianDate`: Show Gregorian date
+- `hijriDate`: Show Hijri date
+- `locateByIp`: Use IP-based location (true/false)
+
+---
+
+## How It Works
+
+1. **IP Detection:** Gets your public IP address using [httpbin.org/ip](https://httpbin.org/ip)
+2. **Geolocation:** Converts IP to coordinates using [ip-api.com](http://ip-api.com)
+3. **City Geocoding:** Uses [Open-Meteo Geocoding API](https://open-meteo.com/) for city-to-coordinates
+4. **Prayer Times:** Fetches prayer times from [AlAdhan API](https://aladhan.com/prayer-times-api)
+5. **Display:** Shows formatted prayer times in your terminal
+
+---
+
+## Example Output
+
+```
+       ﷽   
+   ╭────────۞────────╮
+   │ Fajr    : 05:30 │
+   │ Sunrise : 06:45 │
+   │ Dhuhr   : 12:45 │
+   │ Asr     : 16:15 │
+   │ Maghrib : 19:10 │
+   │ Isha    : 20:30 │
+   ╰────────۞────────╯
+
+ Monday, January 2 2025
+ Next: Maghrib ▣▣▣▣▣▢▢▢▢▢ 01h 23m
+```
+
+---
+
+## APIs Used
+
+- [httpbin.org/ip](https://httpbin.org/ip) — IP detection
+- [ip-api.com](http://ip-api.com) — IP geolocation
+- [Open-Meteo Geocoding API](https://open-meteo.com/) — City geocoding
+- [AlAdhan API](https://aladhan.com/prayer-times-api) — Prayer times
+
+---
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+**Made with ❤️ for the Muslim community** 

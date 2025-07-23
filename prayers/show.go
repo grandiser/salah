@@ -31,14 +31,14 @@ func ShowDateHijri(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	fmt.Println("" + hijriDate)
 }
 func ShowBasmalah() {
-	fmt.Println("       ﷽   \n")
+	fmt.Println("       ﷽   ")
 }
 
 func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
 	prayerFormat := "%-7s : %s"
 	tableFormat := "   │ %s │\n"
 
-	fmt.Println("   ╭────────۩────────╮")
+	fmt.Println("   ╭────────۞────────╮")
 	for _, prayer := range prayers {
 		if prevPrayer.Name == prayer.Name {
 			formattedString := fmt.Sprintf(prayerFormat, prevPrayer.Name, prevPrayer.Time)
