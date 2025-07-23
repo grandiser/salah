@@ -10,6 +10,14 @@ type Prayer struct {
 	Time string
 }
 
+func AladhanHandler(aladhanTimes apis.AladhanAPIResponse, config Config) {
+	if config.Compact {
+		SingleAladhan(aladhanTimes, config)
+	} else {
+		ListAladhan(aladhanTimes, config)
+	}
+}
+
 func ListAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	prayers := []Prayer{
 		{"Fajr", aladhanTimes.Data.Timings.Fajr},
@@ -43,12 +51,4 @@ func SingleAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	fmt.Printf("\n")
 	showDate(aladhanTimes, config)
 	ShowPrayerLoader(prevPrayer, nextPrayer)
-}
-
-func AladhanHandler(aladhanTimes apis.AladhanAPIResponse, config Config) {
-	if config.Compact {
-		SingleAladhan(aladhanTimes, config)
-	} else {
-		ListAladhan(aladhanTimes, config)
-	}
 }

@@ -69,9 +69,17 @@ func GetLoadingSquares(prevPrayer Prayer, nextPrayer Prayer) string {
 	loaded := "▣"
 	unloaded := "▢"
 
+	var nSquares int
+
 	timeBetween := CalculateTimeDiff(prevPrayer, prevPrayer.Time, nextPrayer.Time)
 	timeRemaining := GetTimeRemaining(prevPrayer, nextPrayer)
-	nSquares := int(math.Ceil((float64(timeRemaining) / float64(timeBetween)) * 10))
+
+	nSquares = int(math.Ceil((float64(timeRemaining) / float64(timeBetween)) * 10))
+	nSquares = int(math.Ceil((float64(1200) / float64(1000)) * 10))
+	// avoids error when you run 'salah' during the first minute of the new prayer
+	if nSquares > 10 {
+		nSquares = 10
+	}
 
 	loadingSquares := strings.Repeat(loaded, 10-nSquares) + strings.Repeat(unloaded, nSquares)
 	return loadingSquares
