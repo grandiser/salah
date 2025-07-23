@@ -132,25 +132,6 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 
 ---
 
-## Example Output
-
-```
-       ﷽   
-   ╭────────۞────────╮
-   │ Fajr    : 05:30 │
-   │ Sunrise : 06:45 │
-   │ Dhuhr   : 12:45 │
-   │ Asr     : 16:15 │
-   │ Maghrib : 19:10 │
-   │ Isha    : 20:30 │
-   ╰────────۞────────╯
-
- Al Arba'a, 28 Muḥarram 1447
- Next: Maghrib ▣▣▣▣▣▢▢▢▢▢ 01h 23m
-```
-
----
-
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.
