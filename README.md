@@ -23,12 +23,16 @@ Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 git clone https://github.com/grandiser/salah.git
 cd salah
 go build -o salah
+
+# Move to a directory in your PATH
+sudo mv salah /usr/local/bin/
+
 ```
 
-2. **Move to your PATH:**
+2. Via Go Install
 
 ```bash
-sudo mv salah /usr/local/bin/
+go install github.com/grandiser/salah@latest
 ```
 
 ---
