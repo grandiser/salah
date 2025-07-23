@@ -80,26 +80,29 @@ func OpenMeteoAPI(city string) (GeoEncoding, error) {
 	resp, err := http.Get(city_api)
 
 	if err != nil {
-		panic(err)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-
-	if resp.StatusCode != 200 {
-		panic("Geo-Encoding (Open Meteo) API Not Available.")
+		return GeoEncoding{}, err
 	}
 
 	defer resp.Body.Close()
 
+	if resp.StatusCode != 200 {
+		return GeoEncoding{}, fmt.Errorf("Geo-Encoding (Open Meteo) API Not Available.")
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return GeoEncoding{}, err
+	}
+
 	var geo GeoEncodingApiResponse
 	err = json.Unmarshal(body, &geo)
 	if err != nil {
-		panic(err)
+		return GeoEncoding{}, err
 	}
 
 	if len(geo.Results) == 0 {
 		fmt.Printf("Could not geo-encode city provided.")
-		return GeoEncoding{}, err
+		return GeoEncoding{}, fmt.Errorf("Could not geo-encode city provided.")
 	}
 
 	result := geo.Results[0]
@@ -108,7 +111,7 @@ func OpenMeteoAPI(city string) (GeoEncoding, error) {
 		Latitude:  result.Latitude,
 		Longitude: result.Longitude,
 		Country:   result.Country,
-	}, err
+	}, nil
 }
 
 func LocationAPI(ip string) (Location, error) {
@@ -117,21 +120,24 @@ func LocationAPI(ip string) (Location, error) {
 	resp, err := http.Get(apiCall)
 
 	if err != nil {
-		panic(err)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-
-	if resp.StatusCode != 200 {
-		panic("IP to Location API Not Available.")
+		return Location{}, err
 	}
 
 	defer resp.Body.Close()
 
+	if resp.StatusCode != 200 {
+		return Location{}, fmt.Errorf("IP to Location API Not Available.")
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return Location{}, err
+	}
+
 	var loc LocationAPIResponse
 	err = json.Unmarshal(body, &loc)
 	if err != nil {
-		panic(err)
+		return Location{}, err
 	}
 
 	return Location{
@@ -144,6 +150,6 @@ func LocationAPI(ip string) (Location, error) {
 		Lat:         loc.Lat,
 		Lon:         loc.Lon,
 		Timezone:    loc.Timezone,
-	}, err
+	}, nil
 
 }

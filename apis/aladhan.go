@@ -112,29 +112,32 @@ func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, 
 
 	date := fmt.Sprintf("%d-%d-%d", day, month, year)
 
-	var api_call string = fmt.Sprintf("https://api.aladhan.com/v1/timings/%s?latitude=%s&longitude=%s", date, lat, lon)
+	api_call := fmt.Sprintf("https://api.aladhan.com/v1/timings/%s?latitude=%s&longitude=%s", date, lat, lon)
 
 	resp, err := http.Get(api_call)
 
 	if err != nil {
-		panic(err)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-
-	if resp.StatusCode != 200 {
-		panic("Prayer API Not Available.")
+		return AladhanAPIResponse{}, err
 	}
 
 	defer resp.Body.Close()
 
+	if resp.StatusCode != 200 {
+		return AladhanAPIResponse{}, fmt.Errorf("Prayer API Not Available.")
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return AladhanAPIResponse{}, err
+	}
+
 	var aladhan AladhanAPIResponse
 	err = json.Unmarshal(body, &aladhan)
 	if err != nil {
-		panic(err)
+		return AladhanAPIResponse{}, err
 	}
 
-	return aladhan, err
+	return aladhan, nil
 }
 
 func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIResponse, error) {
@@ -147,22 +150,25 @@ func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIRespon
 	resp, err := http.Get(api_call)
 
 	if err != nil {
-		panic(err)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-
-	if resp.StatusCode != 200 {
-		panic("Prayer API Not Available.")
+		return AladhanAPIResponse{}, err
 	}
 
 	defer resp.Body.Close()
 
+	if resp.StatusCode != 200 {
+		return AladhanAPIResponse{}, fmt.Errorf("Prayer API Not Available.")
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return AladhanAPIResponse{}, err
+	}
+
 	var aladhan AladhanAPIResponse
 	err = json.Unmarshal(body, &aladhan)
 	if err != nil {
-		panic(err)
+		return AladhanAPIResponse{}, err
 	}
 
-	return aladhan, err
+	return aladhan, nil
 }
