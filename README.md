@@ -17,6 +17,8 @@ Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ## Installation
 
+### Linux/macOS
+
 1. Option 1: Build from source:
 
 ```bash
@@ -26,7 +28,6 @@ go build -o salah
 
 # Move to a directory in your PATH
 sudo mv salah /usr/local/bin/
-
 ```
 
 2. Option 2: Via Go Install
@@ -34,6 +35,28 @@ sudo mv salah /usr/local/bin/
 ```bash
 go install github.com/grandiser/salah@latest
 ```
+
+### Windows
+
+1. Option 1: Build from source (requires Go):
+
+Open Command Prompt or PowerShell and run:
+
+```powershell
+git clone https://github.com/grandiser/salah.git
+cd salah
+go build -o salah.exe
+```
+
+You can then run `salah.exe` directly, or move it to a directory in your PATH for easier access.
+
+2. Option 2: Via Go Install (requires Go in PATH):
+
+```powershell
+go install github.com/grandiser/salah@latest
+```
+
+The binary will be placed in your Go bin directory (usually `%USERPROFILE%\go\bin`). Add this directory to your PATH to run `salah` from anywhere.
 
 ---
 
