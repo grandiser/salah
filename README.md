@@ -1,6 +1,6 @@
 # Salah
 
-A fast, privacy-focused command-line tool to display Islamic prayer times for your location. Salah can automatically detect your location via your IP address, or you can specify your city and country for precise results.
+Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go 
 
 ---
 
@@ -113,15 +113,6 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
  Monday, January 2 2025
  Next: Maghrib ▣▣▣▣▣▢▢▢▢▢ 01h 23m
 ```
-
----
-
-## APIs Used
-
-- [httpbin.org/ip](https://httpbin.org/ip) — IP detection
-- [ip-api.com](http://ip-api.com) — IP geolocation
-- [Open-Meteo Geocoding API](https://open-meteo.com/) — City geocoding
-- [AlAdhan API](https://aladhan.com/prayer-times-api) — Prayer times
 
 ---
 
