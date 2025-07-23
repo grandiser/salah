@@ -153,7 +153,7 @@ func ParseFlags() Flags {
 	flags := Flags{}
 
 	flag.StringVar(&flags.City, "city", "", "City to get prayer times for")
-	flag.StringVar(&flags.Country, "units", "", "Country in which city is located")
+	flag.StringVar(&flags.Country, "country", "", "Country in which city is located")
 	flag.BoolVar(&flags.Compact, "compact", false, "Compact display mode")
 	flag.BoolVar(&flags.Help, "help", false, "Show help")
 
