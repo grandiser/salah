@@ -17,7 +17,7 @@ Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ## Installation
 
-1. **Build from source:**
+1. Option 1: Build from source:
 
 ```bash
 git clone https://github.com/grandiser/salah.git
@@ -29,7 +29,7 @@ sudo mv salah /usr/local/bin/
 
 ```
 
-2. Via Go Install
+2. Option 2: Via Go Install
 
 ```bash
 go install github.com/grandiser/salah@latest
