@@ -6,14 +6,12 @@ Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ## Features
 
-- 🌍 **Automatic location detection** (via IP address)
-- 🕌 **Accurate daily prayer times** (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha)
-- ⚡ **Fast, single-binary CLI** (written in Go)
-- 🔒 **No API keys or personal data required**
-- 🌐 **Works worldwide**
-- 🎨 **Colorful, clear terminal output**
-- 🗓️ **Hijri and Gregorian date support**
-- 🏷️ **Compact mode for minimal output**
+- **Automatic location detection**
+- **Accurate daily prayer times**
+- **Fast, single-binary CLI**
+- **No API keys or personal data required**
+- **Hijri and Gregorian date support**
+- **Compact mode for minimal output**
 
 ---
 
