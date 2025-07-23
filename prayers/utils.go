@@ -11,9 +11,6 @@ import (
 )
 
 func GetHijriDate(aladhanTimes apis.AladhanAPIResponse, config Config) string {
-	// BUG: API Return Date Values Incorrect. Do not use until fixed.
-	// Fix request made to AladhanAPI team
-
 	var hijri string
 	dayNum := aladhanTimes.Data.Date.Hijri.Day
 

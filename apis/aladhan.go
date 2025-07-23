@@ -110,7 +110,7 @@ func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, 
 	lat := strconv.FormatFloat(latitude, 'f', -1, 32)
 	lon := strconv.FormatFloat(longitude, 'f', -1, 32)
 
-	date := fmt.Sprintf("%d-%d-%d", year, month, day)
+	date := fmt.Sprintf("%d-%d-%d", day, month, year)
 
 	var api_call string = fmt.Sprintf("https://api.aladhan.com/v1/timings/%s?latitude=%s&longitude=%s", date, lat, lon)
 
@@ -140,7 +140,7 @@ func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, 
 func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIResponse, error) {
 	year, month, day := time.Now().Date()
 	fixedCityName := FixCityName(city_name)
-	date := fmt.Sprintf("%d-%d-%d", year, month, day)
+	date := fmt.Sprintf("%d-%d-%d", day, month, year)
 
 	var api_call string = fmt.Sprintf("https://api.aladhan.com/v1/timingsByCity/%s?city=%s&country=%s", date, fixedCityName, country_name)
 
