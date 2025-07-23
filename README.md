@@ -1,6 +1,10 @@
+<div align="center">
+
 # Salah
 
-Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go 
+Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
+
+</div>
 
 ---
 
