@@ -21,35 +21,36 @@ func showDate(aladhanTimes apis.AladhanAPIResponse, config Config) {
 
 func ShowDateGregorian() {
 	today := time.Now().Format("Monday, January 2 2006")
-	datePrint := color.New(color.FgCyan, color.Bold).PrintFunc()
-
+	datePrint := color.New(color.FgBlue, color.Bold).PrintFunc()
 	datePrint(" " + today + "\n")
 }
 
 func ShowDateHijri(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	hijriDate := GetHijriDate(aladhanTimes, config)
-	fmt.Println("" + hijriDate)
+	hijriStr := fmt.Sprintf(" %s", hijriDate)
+	fmt.Println(boldColor256(27, hijriStr))
 }
 func ShowBasmalah() {
-	fmt.Println("       ﷽   ")
+	whitePrint := color.New(color.FgHiWhite, color.Bold).PrintFunc()
+	whitePrint("       ﷽   \n")
 }
 
 func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
 	prayerFormat := "%-7s : %s"
 	tableFormat := "   │ %s │\n"
+	boldGreen := color.New(color.FgHiCyan, color.Bold).SprintFunc()
+	boldMagenta := color.New(color.FgHiBlue, color.Bold).SprintFunc()
 
 	fmt.Println("   ╭────────۞────────╮")
 	for _, prayer := range prayers {
 		if prevPrayer.Name == prayer.Name {
 			formattedString := fmt.Sprintf(prayerFormat, prevPrayer.Name, prevPrayer.Time)
-			boldGreen := color.New(color.FgGreen, color.Bold).SprintFunc()
 			coloredString := boldGreen(formattedString)
 
 			fmt.Printf(tableFormat, coloredString)
 
 		} else if nextPrayer.Name == prayer.Name {
 			formattedString := fmt.Sprintf(prayerFormat, nextPrayer.Name, nextPrayer.Time)
-			boldMagenta := color.New(color.FgMagenta, color.Bold).SprintFunc()
 			coloredString := boldMagenta(formattedString)
 
 			fmt.Printf(tableFormat, coloredString)
@@ -63,8 +64,8 @@ func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
 }
 
 func ShowPrayerLoader(prevPrayer Prayer, nextPrayer Prayer) {
-	formatter := " Next: %s %s %s\n\n"
-	nextPrayerPrint := color.New(color.FgMagenta, color.Bold).PrintfFunc()
+	formatter := " Next: %s %s %s\n"
+	nextPrayerPrint := color.New(color.FgHiBlue, color.Bold).PrintfFunc()
 	timeRemaining := strings.Replace(GetTimeRemaining(prevPrayer, nextPrayer).String(), "0s", "", 1)
 	loadingSquares := GetLoadingSquares(prevPrayer, nextPrayer)
 	nextPrayerPrint(formatter, nextPrayer.Name, loadingSquares, timeRemaining)

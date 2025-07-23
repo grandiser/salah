@@ -7,27 +7,31 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatih/color"
 	"github.com/grandiser/salah/apis"
 )
+
+func boldColor256(colorCode int, text string) string {
+	// Color codes list : https://www.ditig.com/256-colors-cheat-sheet
+	return fmt.Sprintf("\033[1;38;5;%dm%s\033[0m", colorCode, text)
+}
 
 func GetHijriDate(aladhanTimes apis.AladhanAPIResponse, config Config) string {
 	var hijri string
 	dayNum := aladhanTimes.Data.Date.Hijri.Day
+	format := "%s, %s %s %s"
 
 	if config.UseArabic {
 		arMonth := aladhanTimes.Data.Date.Hijri.Month.Ar
 		year := aladhanTimes.Data.Date.Hijri.Year
 		arWeekday := aladhanTimes.Data.Date.Hijri.Weekday.Ar
-		hijri = fmt.Sprintf(" %s، %s %s %s", arWeekday, dayNum, arMonth, year)
+		hijri = fmt.Sprintf(format, arWeekday, dayNum, arMonth, year)
 	} else {
 		enMonth := aladhanTimes.Data.Date.Hijri.Month.En
 		year := aladhanTimes.Data.Date.Hijri.Year
 		enWeekday := aladhanTimes.Data.Date.Hijri.Weekday.En
-		format := " %s, %s %s %s"
 		hijri = fmt.Sprintf(format, enWeekday, dayNum, enMonth, year)
 	}
-	return color.New(color.FgCyan, color.Bold).Sprintf(hijri)
+	return hijri
 }
 
 func ConvertStringToTime(timeStr string) time.Time {
@@ -75,7 +79,6 @@ func GetLoadingSquares(prevPrayer Prayer, nextPrayer Prayer) string {
 	timeRemaining := GetTimeRemaining(prevPrayer, nextPrayer)
 
 	nSquares = int(math.Ceil((float64(timeRemaining) / float64(timeBetween)) * 10))
-	nSquares = int(math.Ceil((float64(1200) / float64(1000)) * 10))
 	// avoids error when you run 'salah' during the first minute of the new prayer
 	if nSquares > 10 {
 		nSquares = 10

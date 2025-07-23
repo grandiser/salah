@@ -35,6 +35,7 @@ func ListAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	ShowPrayersList(prevPrayer, nextPrayer, prayers)
 	showDate(aladhanTimes, config)
 	ShowPrayerLoader(prevPrayer, nextPrayer)
+	fmt.Printf("\n")
 }
 
 func SingleAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
@@ -51,4 +52,5 @@ func SingleAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	fmt.Printf("\n")
 	showDate(aladhanTimes, config)
 	ShowPrayerLoader(prevPrayer, nextPrayer)
+	fmt.Printf("\n")
 }
