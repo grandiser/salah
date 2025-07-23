@@ -126,5 +126,7 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## Acknowledgements
 
+- [AlAdhan API](https://aladhan.com/prayer-times-api) for providing accurate and reliable prayer times data.
+- Inspired by [stormy](https://github.com/ashish0kumar/stormy), a minimal, neofetch-like weather CLI.
 
 **Made with ❤️ for the Muslim community** 
