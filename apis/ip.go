@@ -7,8 +7,6 @@ import (
 	"net/http"
 )
 
-//todo: update to http://ip-api.com/json/
-
 type IPAPIResponse struct {
 	Status      string  `json:"status"`
 	Country     string  `json:"country"`
