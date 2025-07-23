@@ -112,7 +112,7 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
    │ Isha    : 20:30 │
    ╰────────۞────────╯
 
- Al Arba'a, 1 Muharram 1447
+ Al Arba'a, 28 Muḥarram 1447
  Next: Maghrib ▣▣▣▣▣▢▢▢▢▢ 01h 23m
 ```
 
