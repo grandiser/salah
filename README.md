@@ -2,6 +2,8 @@
 
 # Salah
 
+*And establish prayer at the two ends of the day and at the approach of the night. Indeed, good deeds do away with misdeeds. That is a reminder for those who remember.* - Quran 11:114
+
 Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ---
@@ -160,4 +162,3 @@ MIT License — see [LICENSE](LICENSE) for details.
 - [AlAdhan API](https://aladhan.com/prayer-times-api) for providing accurate and reliable prayer times data.
 - Inspired by [stormy](https://github.com/ashish0kumar/stormy), a minimal, neofetch-like weather CLI.
 
-**Made with ❤️ for the Muslim community** 
