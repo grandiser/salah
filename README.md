@@ -134,11 +134,10 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 
 ## How It Works
 
-1. **IP Detection:** Gets your public IP address using [httpbin.org/ip](https://httpbin.org/ip)
-2. **Geolocation:** Converts IP to coordinates using [ip-api.com](http://ip-api.com)
-3. **City Geocoding:** Uses [Open-Meteo Geocoding API](https://open-meteo.com/) for city-to-coordinates
-4. **Prayer Times:** Fetches prayer times from [AlAdhan API](https://aladhan.com/prayer-times-api)
-5. **Display:** Shows formatted prayer times in your terminal
+1. **IP Detection amd Geolocation:** Gets your public IP address using [ip-api.com](http://ip-api.com)
+2. **City Geocoding:** Uses [Open-Meteo Geocoding API](https://open-meteo.com/) for city-to-coordinates
+3. **Prayer Times:** Fetches prayer times from [AlAdhan API](https://aladhan.com/prayer-times-api)
+4. **Display:** Shows formatted prayer times in your terminal
 
 ---
 
@@ -151,5 +150,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 ## Acknowledgements
 
 - [AlAdhan API](https://aladhan.com/prayer-times-api) for providing accurate and reliable prayer times data.
+- [Open-Meteo Geocoding API](https://open-meteo.com/) for city-to-coordinates data.
 - Inspired by [stormy](https://github.com/ashish0kumar/stormy), a minimal, neofetch-like weather CLI.
 
