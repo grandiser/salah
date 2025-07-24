@@ -40,6 +40,10 @@ func GetDefaultConfig() Config {
 }
 
 func ValidateConfig(config *Config) {
+	if runtime.GOOS == "windows" && config.UseArabic {
+		fmt.Fprintln(os.Stderr, "Warning: Arabic is not well supported on Windows.\nPlease change your config values.\nReverting to English.")
+		config.UseArabic = false
+	}
 
 	if !config.LocateByIp {
 		if config.City == "" {
