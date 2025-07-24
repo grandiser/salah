@@ -125,10 +125,10 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 
 ## Display Examples
 
-<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/081e86aa-da34-4cc3-b19e-cb2b8eb35ac6" />
-<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/87a70c8e-3f98-4a96-b696-84b44f3c72e1" />
-<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/b4ddfadf-f04f-41dd-b3da-486fa5930353" />
-<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/cc04cbe6-6245-4933-bfad-8f2322a5f298" />
+|  |  |
+|---|---|
+| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/081e86aa-da34-4cc3-b19e-cb2b8eb35ac6" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/87a70c8e-3f98-4a96-b696-84b44f3c72e1" /> |
+| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/b4ddfadf-f04f-41dd-b3da-486fa5930353" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/cc04cbe6-6245-4933-bfad-8f2322a5f298" /> |
 
 ---
 
