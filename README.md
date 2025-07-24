@@ -7,7 +7,8 @@
 Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ---
-<img width="584" height="248" alt="image" src="https://github.com/user-attachments/assets/8d1fd883-5132-4e74-a3ec-1e6d3514e29a" />
+<img width="562" height="253" alt="image" src="https://github.com/user-attachments/assets/725d70f7-7452-4867-9ddd-a0790555d164" />
+
 
 
 ---
