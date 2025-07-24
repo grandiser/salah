@@ -7,9 +7,7 @@
 Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ---
-<img width="562" height="253" alt="image" src="https://github.com/user-attachments/assets/725d70f7-7452-4867-9ddd-a0790555d164" />
-
-
+<img width="597" height="365" alt="image" src="https://github.com/user-attachments/assets/77590643-46c2-4a78-b2bf-83d625d09c61" />
 
 ---
 
@@ -120,6 +118,17 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 - `gregorianDate`: Show Gregorian date
 - `hijriDate`: Show Hijri date
 - `locateByIp`: Use IP-based location
+
+---
+
+---
+
+## Display Examples
+
+<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/081e86aa-da34-4cc3-b19e-cb2b8eb35ac6" />
+<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/87a70c8e-3f98-4a96-b696-84b44f3c72e1" />
+<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/b4ddfadf-f04f-41dd-b3da-486fa5930353" />
+<img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/cc04cbe6-6245-4933-bfad-8f2322a5f298" />
 
 ---
 
