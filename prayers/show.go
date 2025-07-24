@@ -2,7 +2,6 @@ package prayers
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"github.com/grandiser/salah/apis"
 	"strings"
 	"time"
@@ -18,7 +17,6 @@ func showDate(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	}
 	formattedDate := DateFormatter(todayDate)
 	DatePrinter(formattedDate)
-
 }
 
 func ShowBasmalah() {
@@ -28,29 +26,14 @@ func ShowBasmalah() {
 }
 
 func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
-	prayerFormat := "%-7s : %s"
-	tableFormat := "   │ %s │\n"
-	boldGreen := color.New(color.FgHiCyan, color.Bold).SprintFunc()
-	boldMagenta := color.New(color.FgHiBlue, color.Bold).SprintFunc()
-
 	fmt.Println("   ╭────────۞────────╮")
 	for _, prayer := range prayers {
-		if prevPrayer.Name == prayer.Name {
-			formattedString := fmt.Sprintf(prayerFormat, prevPrayer.Name, prevPrayer.Time)
-			coloredString := boldGreen(formattedString)
-
-			fmt.Printf(tableFormat, coloredString)
-
-		} else if nextPrayer.Name == prayer.Name {
-			formattedString := fmt.Sprintf(prayerFormat, nextPrayer.Name, nextPrayer.Time)
-			coloredString := boldMagenta(formattedString)
-
-			fmt.Printf(tableFormat, coloredString)
-
-		} else {
-			prayerString := fmt.Sprintf(prayerFormat, prayer.Name, prayer.Time)
-			fmt.Printf(tableFormat, prayerString)
-		}
+		isPrev := prevPrayer.Name == prayer.Name
+		isNext := nextPrayer.Name == prayer.Name
+		formattedPrayer := PrayerFormatter(prayer.Name, prayer.Time)
+		coloredPrayer := PrayerColorer(formattedPrayer, isPrev, isNext)
+		formattedTableLine := TableFormatter(coloredPrayer)
+		fmt.Printf(formattedTableLine)
 	}
 	fmt.Println("   ╰────────۞────────╯\n")
 }
