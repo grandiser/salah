@@ -60,7 +60,7 @@ func DatePrinter(dateSprint string) {
 	switch userOS {
 
 	case "darwin":
-		fmt.Printf(boldColor256(27, dateSprint))
+		fmt.Printf(boldColor256(157, dateSprint))
 	case "linux":
 		fmt.Printf(boldColor256(157, dateSprint))
 
@@ -87,7 +87,7 @@ func LoaderPrinter(loaderSprint string) {
 	switch userOS {
 
 	case "darwin":
-		fmt.Printf(boldColor256(21, loaderSprint))
+		fmt.Printf(boldColor256(153, loaderSprint))
 	case "linux":
 		fmt.Printf(boldColor256(153, loaderSprint))
 
@@ -115,11 +115,11 @@ func PrayerColorer(prayerSprint string, isPrev bool, isNext bool) string {
 	switch userOS {
 	case "darwin":
 		if isPrev {
-			return fmt.Sprintf(boldColor256(23, prayerSprint))
+			return fmt.Sprintf(boldColor256(153, prayerSprint))
 		} else if isNext {
-			return fmt.Sprintf(boldColor256(11, prayerSprint))
+			return fmt.Sprintf(boldColor256(102, prayerSprint))
 		} else {
-			return prayerSprint
+			return fmt.Sprintf(boldColor256(102, prayerSprint))
 		}
 
 	case "linux":
