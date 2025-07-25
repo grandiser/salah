@@ -17,7 +17,7 @@ func autoBehavior(config prayers.Config) {
 		return
 	}
 
-	aladhanTimes, err := apis.AladhanCoordsAPI(IPLocResponse.Lat, IPLocResponse.Lon)
+	aladhanTimes, err := apis.AladhanCoordsAPI(IPLocResponse.Lat, IPLocResponse.Lon, config.CalculationMethod)
 	if err != nil {
 		fmt.Println("IP Encoding API Unavailable. Trying with default location values in config")
 		configLocationBehavior(config)
@@ -28,7 +28,7 @@ func autoBehavior(config prayers.Config) {
 }
 
 func configLocationBehavior(config prayers.Config) {
-	aladhanTimes, err := apis.AladhanLocationAPI(config.City, config.Country)
+	aladhanTimes, err := apis.AladhanLocationAPI(config.City, config.Country, config.CalculationMethod)
 
 	if err != nil {
 		fmt.Println("AlAdhan API Not Available (config location). Try again later")
@@ -44,7 +44,7 @@ func cityBehavior(config prayers.Config) {
 		fmt.Println("Geo Encoding API Not Available. Use both --city and --country flags")
 		os.Exit(1)
 	}
-	aladhanTimes, err := apis.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
+	aladhanTimes, err := apis.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude, config.CalculationMethod)
 	if err != nil {
 		fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 		os.Exit(1)
@@ -53,7 +53,7 @@ func cityBehavior(config prayers.Config) {
 }
 
 func cityCountryBehavior(config prayers.Config) {
-	aladhanTimes, err := apis.AladhanLocationAPI(config.City, config.Country)
+	aladhanTimes, err := apis.AladhanLocationAPI(config.City, config.Country, config.CalculationMethod)
 
 	// Default behavior using City and Country values
 	if err == nil {
@@ -67,7 +67,7 @@ func cityCountryBehavior(config prayers.Config) {
 			fmt.Println("Geo Encoding API Not Available. Try again later")
 			os.Exit(1)
 		}
-		aladhanTimes, err := apis.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude)
+		aladhanTimes, err := apis.AladhanCoordsAPI(geoEncoding.Latitude, geoEncoding.Longitude, config.CalculationMethod)
 		if err != nil {
 			fmt.Println("AlAdhan API Not Available (coordinates). Try again later")
 			os.Exit(1)

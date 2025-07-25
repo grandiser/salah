@@ -8,16 +8,18 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 )
 
 type Config struct {
-	City       string `toml:"city"`
-	Country    string `toml:"country"`
-	Compact    bool   `toml:"Compact"`
-	UseColors  bool   `toml:"useColors"`
-	UseArabic  bool   `toml:"useArabic"`
-	HijriDate  bool   `toml:"hijriDate"`
-	LocateByIp bool   `toml:"locateByIp"`
+	City              string `toml:"city"`
+	Country           string `toml:"country"`
+	CalculationMethod string `toml:"calculationMethod"`
+	Compact           bool   `toml:"Compact"`
+	UseColors         bool   `toml:"useColors"`
+	UseArabic         bool   `toml:"useArabic"`
+	HijriDate         bool   `toml:"hijriDate"`
+	LocateByIp        bool   `toml:"locateByIp"`
 }
 
 type Flags struct {
@@ -27,15 +29,48 @@ type Flags struct {
 	Help    bool
 }
 
+type Method struct {
+	ID   string
+	Name string
+}
+
+var methods = []Method{
+	{ID: "0", Name: "JAFARI"},
+	{ID: "1", Name: "KARACHI"},
+	{ID: "2", Name: "ISNA"},
+	{ID: "3", Name: "MWL"},
+	{ID: "4", Name: "MAKKAH"},
+	{ID: "5", Name: "EGYPT"},
+	{ID: "7", Name: "TEHRAN"},
+	{ID: "8", Name: "GULF"},
+	{ID: "9", Name: "KUWAIT"},
+	{ID: "10", Name: "QATAR"},
+	{ID: "11", Name: "SINGAPORE"},
+	{ID: "12", Name: "FRANCE"},
+	{ID: "13", Name: "TURKEY"},
+	{ID: "14", Name: "RUSSIA"},
+	{ID: "15", Name: "MOONSIGHTING"},
+	{ID: "16", Name: "DUBAI"},
+	{ID: "17", Name: "JAKIM"},
+	{ID: "18", Name: "TUNISIA"},
+	{ID: "19", Name: "ALGERIA"},
+	{ID: "20", Name: "KEMENAG"},
+	{ID: "21", Name: "MOROCCO"},
+	{ID: "22", Name: "PORTUGAL"},
+	{ID: "23", Name: "JORDAN"},
+	{ID: "99", Name: "CUSTOM"},
+}
+
 func GetDefaultConfig() Config {
 	return Config{
-		City:       "",
-		Country:    "",
-		Compact:    false,
-		UseColors:  true,
-		UseArabic:  false,
-		HijriDate:  false,
-		LocateByIp: true,
+		City:              "",
+		Country:           "",
+		CalculationMethod: "",
+		Compact:           false,
+		UseColors:         true,
+		UseArabic:         false,
+		HijriDate:         false,
+		LocateByIp:        true,
 	}
 }
 
@@ -45,6 +80,22 @@ func ValidateConfig(config *Config) {
 		config.UseArabic = false
 	}
 
+	if config.CalculationMethod != "" {
+		userInputMethod := config.CalculationMethod
+		upperCaseInputMethod := strings.ToUpper(userInputMethod)
+		exists := false
+		for _, method := range methods {
+			if method.ID == upperCaseInputMethod || method.Name == upperCaseInputMethod {
+				exists = true
+				config.CalculationMethod = upperCaseInputMethod
+				break
+			}
+		}
+		if !exists {
+			log.Fatalln("\n\n", userInputMethod, "is not a valid calculation method.\nIt is recommended to leave the config field as \"\" for automatic detection.\nOr use 'id' value or method abbreviation.\nSee the API Documentation for more information: \nhttps://aladhan.com/prayer-times-api#get-/methods")
+
+		}
+	}
 	if !config.LocateByIp {
 		if config.City == "" {
 			log.Fatalln(os.Stderr, "Warning: cannot leave 'City' value empty. Please enter your city in the config file.")

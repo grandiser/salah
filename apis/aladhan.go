@@ -105,14 +105,18 @@ type AladhanAPIResponse struct {
 	} `json:"data"`
 }
 
-func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, error) {
+func AladhanCoordsAPI(latitude float64, longitude float64, calculationMethod string) (AladhanAPIResponse, error) {
 	year, month, day := time.Now().Date()
 	lat := strconv.FormatFloat(latitude, 'f', -1, 32)
 	lon := strconv.FormatFloat(longitude, 'f', -1, 32)
-
 	date := fmt.Sprintf("%d-%d-%d", day, month, year)
+	var api_call string
 
-	api_call := fmt.Sprintf("https://api.aladhan.com/v1/timings/%s?latitude=%s&longitude=%s", date, lat, lon)
+	if calculationMethod != "" {
+		api_call = fmt.Sprintf("https://api.aladhan.com/v1/timings/%s?latitude=%s&longitude=%s&method=%s", date, lat, lon, calculationMethod)
+	} else {
+		api_call = fmt.Sprintf("https://api.aladhan.com/v1/timings/%s?latitude=%s&longitude=%s", date, lat, lon)
+	}
 
 	resp, err := http.Get(api_call)
 
@@ -140,12 +144,17 @@ func AladhanCoordsAPI(latitude float64, longitude float64) (AladhanAPIResponse, 
 	return aladhan, nil
 }
 
-func AladhanLocationAPI(city_name string, country_name string) (AladhanAPIResponse, error) {
+func AladhanLocationAPI(city_name string, country_name string, calculationMethod string) (AladhanAPIResponse, error) {
 	year, month, day := time.Now().Date()
 	fixedCityName := FixCityName(city_name)
 	date := fmt.Sprintf("%d-%d-%d", day, month, year)
+	var api_call string
 
-	var api_call string = fmt.Sprintf("https://api.aladhan.com/v1/timingsByCity/%s?city=%s&country=%s", date, fixedCityName, country_name)
+	if calculationMethod != "" {
+		api_call = fmt.Sprintf("https://api.aladhan.com/v1/timingsByCity/%s?city=%s&country=%s&method=%s", date, fixedCityName, country_name, calculationMethod)
+	} else {
+		api_call = fmt.Sprintf("https://api.aladhan.com/v1/timingsByCity/%s?city=%s&country=%s", date, fixedCityName, country_name)
+	}
 
 	resp, err := http.Get(api_call)
 
