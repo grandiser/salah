@@ -62,7 +62,7 @@ func ListAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 	ShowBasmalah()
 	ShowPrayersList(prevPrayer, nextPrayer, prayers, config.UseArabic)
 	showDate(aladhanTimes, config)
-	ShowPrayerLoader(prevPrayer, nextPrayer)
+	ShowPrayerLoader(prevPrayer, nextPrayer, config.UseArabic)
 	fmt.Printf("\n")
 }
 
@@ -79,6 +79,6 @@ func SingleAladhan(aladhanTimes apis.AladhanAPIResponse, config Config) {
 
 	fmt.Printf("\n")
 	showDate(aladhanTimes, config)
-	ShowPrayerLoader(prevPrayer, nextPrayer)
+	ShowPrayerLoader(prevPrayer, nextPrayer, config.UseArabic)
 	fmt.Printf("\n")
 }

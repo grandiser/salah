@@ -39,9 +39,9 @@ func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer, use
 	fmt.Println("   ╰────────۞────────╯\n")
 }
 
-func ShowPrayerLoader(prevPrayer Prayer, nextPrayer Prayer) {
+func ShowPrayerLoader(prevPrayer Prayer, nextPrayer Prayer, useArabic bool) {
 	timeRemaining := strings.Replace(GetTimeRemaining(prevPrayer, nextPrayer).String(), "0s", "", 1)
 	loadingSquares := GetLoadingSquares(prevPrayer, nextPrayer)
-	formattedLoader := LoaderFormatter(nextPrayer.Name, loadingSquares, timeRemaining)
+	formattedLoader := LoaderFormatter(nextPrayer.Name, loadingSquares, timeRemaining, useArabic)
 	LoaderPrinter(formattedLoader)
 }

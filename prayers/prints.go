@@ -82,17 +82,32 @@ func DatePrinter(dateSprint string) {
 	}
 }
 
-func LoaderFormatter(nextPrayerName string, loadingSquares string, timeRemaining string) string {
-	switch userOS {
+func LoaderFormatter(nextPrayerName string, loadingSquares string, timeRemaining string, useArabic bool) string {
+	if useArabic {
+		switch userOS {
 
-	case "darwin":
-		return fmt.Sprintf("%-1sNext: %s %s %s\n", "", nextPrayerName, loadingSquares, timeRemaining)
-	case "linux":
-		return fmt.Sprintf("%-1sNext: %s %s %s\n", "", nextPrayerName, loadingSquares, timeRemaining)
-	case "windows":
-		return fmt.Sprintf("%-1sNext: %s %s %s\n", "", nextPrayerName, loadingSquares, timeRemaining)
-	default:
-		return ""
+		case "darwin":
+			return fmt.Sprintf("%s %s %s %s %s\n", "", timeRemaining, loadingSquares, "القادم:", nextPrayerName)
+		case "linux":
+			return fmt.Sprintf("%s %s %s %s %s\n", "", timeRemaining, loadingSquares, "القادم:", nextPrayerName)
+		case "windows":
+			return fmt.Sprintf("%s %s %s %s %s\n", "", timeRemaining, loadingSquares, "القادم:", nextPrayerName)
+		default:
+			return ""
+		}
+	} else {
+
+		switch userOS {
+
+		case "darwin":
+			return fmt.Sprintf("%-1sNext: %s %s %s\n", "", nextPrayerName, loadingSquares, timeRemaining)
+		case "linux":
+			return fmt.Sprintf("%-1sNext: %s %s %s\n", "", nextPrayerName, loadingSquares, timeRemaining)
+		case "windows":
+			return fmt.Sprintf("%-1sNext: %s %s %s\n", "", nextPrayerName, loadingSquares, timeRemaining)
+		default:
+			return ""
+		}
 	}
 }
 
