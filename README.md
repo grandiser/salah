@@ -112,10 +112,9 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 
 - `city`: Default city
 - `country`: Default country
+- `calculationMethod` = Specify a calculation method for prayers using the ID or Shorthand notation. See the API reference for more information: https://aladhan.com/prayer-times-api#get-/methods.
 - `compact`: Compact output
-- `useColors`: Enable/disable colored output
-- `useArabic`: Show Hijri date in Arabic
-- `gregorianDate`: Show Gregorian date
+- `useArabic`: Use Arabic for Dates and Prayer Names
 - `hijriDate`: Show Hijri date
 - `locateByIp`: Use IP-based location
 
@@ -136,9 +135,8 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 ## How It Works
 
 1. **IP Detection amd Geolocation:** Gets your public IP address using [ip-api.com](http://ip-api.com)
-2. **City Geocoding:** Uses [Open-Meteo Geocoding API](https://open-meteo.com/) for city-to-coordinates
-3. **Prayer Times:** Fetches prayer times from [AlAdhan API](https://aladhan.com/prayer-times-api)
-4. **Display:** Shows formatted prayer times in your terminal
+2. **Prayer Times:** Fetches prayer times from [AlAdhan API](https://aladhan.com/prayer-times-api)
+3. **Display:** Shows formatted prayer times in your terminal
 
 ---
 
@@ -151,6 +149,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 ## Acknowledgements
 
 - [AlAdhan API](https://aladhan.com/prayer-times-api) for providing accurate and reliable prayer times data.
-- [Open-Meteo Geocoding API](https://open-meteo.com/) for city-to-coordinates data.
+- [IP-API](http://ip-api.com) for providing free and accurate geolocation data.
 - Inspired by [stormy](https://github.com/ashish0kumar/stormy), a minimal, neofetch-like weather CLI.
 
