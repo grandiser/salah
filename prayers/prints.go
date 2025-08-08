@@ -3,6 +3,7 @@ package prayers
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/mehran-prs/gopersian"
 	"runtime"
 )
 
@@ -22,7 +23,10 @@ func BasmalahFormatter(basmalah string) string {
 	case "linux":
 		return fmt.Sprintf("%-6s%s%-3s\n", "", basmalah, "")
 	case "windows":
-		basmalah = "بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم"
+		basmalah, err := gopersian.Bidi("بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم")
+		if err != nil {
+			fmt.Println("Error converting arabic text bidirectionally")
+		}
 		return fmt.Sprintf("%-2s%s\n\n", "", basmalah)
 	default:
 		return ""
