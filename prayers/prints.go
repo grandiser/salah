@@ -2,9 +2,12 @@ package prayers
 
 import (
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/mehran-prs/gopersian"
 	"runtime"
+	"strings"
+	"unicode/utf8"
+
+	"github.com/01walid/goarabic"
+	"github.com/fatih/color"
 )
 
 // Color codes list : https://www.ditig.com/256-colors-cheat-sheet
@@ -23,10 +26,7 @@ func BasmalahFormatter(basmalah string) string {
 	case "linux":
 		return fmt.Sprintf("%-6s%s%-3s\n", "", basmalah, "")
 	case "windows":
-		basmalah, err := gopersian.Bidi("بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم")
-		if err != nil {
-			fmt.Println("Error converting arabic text bidirectionally")
-		}
+		basmalah = goarabic.Reverse("بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم")
 		return fmt.Sprintf("%-2s%s\n\n", "", basmalah)
 	default:
 		return ""
@@ -111,19 +111,36 @@ func LoaderPrinter(loaderSprint string) {
 	}
 }
 
-func PrayerFormatter(prayerName string, prayerTime string) string {
-	switch userOS := runtime.GOOS; userOS {
-
-	case "darwin":
-		return fmt.Sprintf("%-7s : %s", prayerName, prayerTime)
-	case "linux":
-		return fmt.Sprintf("%-7s : %s", prayerName, prayerTime)
-	case "windows":
-		return fmt.Sprintf("%-7s : %s", prayerName, prayerTime)
-	default:
-		return ""
+func PrayerFormatter(prayerName string, prayerTime string, useArabic bool) string {
+	// When Arabic is enabled, show time on the left and name on the right
+	if useArabic {
+		const columnWidth = 7
+		paddedName := padRightAlign(prayerName, columnWidth)
+		return fmt.Sprintf("%s : %s", prayerTime, paddedName)
+	} else {
+		// Default (non-Arabic): name on the left, time on the right
+		switch userOS {
+		case "darwin":
+			return fmt.Sprintf("%-7s : %s", prayerName, prayerTime)
+		case "linux":
+			return fmt.Sprintf("%-7s : %s", prayerName, prayerTime)
+		case "windows":
+			return fmt.Sprintf("%-7s : %s", prayerName, prayerTime)
+		default:
+			return ""
+		}
 	}
 
+}
+
+func padRightAlign(s string, width int) string {
+	// Count visible runes, not bytes
+	runeCount := utf8.RuneCountInString(s)
+	if runeCount >= width {
+		return s
+	}
+	padding := width - runeCount
+	return strings.Repeat(" ", padding) + s
 }
 
 func PrayerColorer(prayerSprint string, isPrev bool, isNext bool) string {

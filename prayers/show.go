@@ -2,9 +2,10 @@ package prayers
 
 import (
 	"fmt"
-	"github.com/grandiser/salah/apis"
 	"strings"
 	"time"
+
+	"github.com/grandiser/salah/apis"
 )
 
 func showDate(aladhanTimes apis.AladhanAPIResponse, config Config) {
@@ -25,12 +26,12 @@ func ShowBasmalah() {
 	BasmalahPrinter(formattedBasmalah)
 }
 
-func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer) {
+func ShowPrayersList(prevPrayer Prayer, nextPrayer Prayer, prayers []Prayer, useArabic bool) {
 	fmt.Println("   ╭────────۞────────╮")
 	for _, prayer := range prayers {
 		isPrev := prevPrayer.Name == prayer.Name
 		isNext := nextPrayer.Name == prayer.Name
-		formattedPrayer := PrayerFormatter(prayer.Name, prayer.Time)
+		formattedPrayer := PrayerFormatter(prayer.Name, prayer.Time, useArabic)
 		coloredPrayer := PrayerColorer(formattedPrayer, isPrev, isNext)
 		formattedTableLine := TableFormatter(coloredPrayer)
 		fmt.Printf(formattedTableLine)

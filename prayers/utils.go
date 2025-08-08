@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/01walid/goarabic"
 	"github.com/grandiser/salah/apis"
 )
 
@@ -18,18 +19,27 @@ func boldColor256(colorCode int, text string) string {
 func GetHijriDate(aladhanTimes apis.AladhanAPIResponse, config Config) string {
 	var hijri string
 	dayNum := aladhanTimes.Data.Date.Hijri.Day
-	format := "%s, %s %s %s"
+	enformat := "%s, %s %s %s"
+	arformat := "%s %s %s %s"
 
 	if config.UseArabic {
 		arMonth := aladhanTimes.Data.Date.Hijri.Month.Ar
 		year := aladhanTimes.Data.Date.Hijri.Year
 		arWeekday := aladhanTimes.Data.Date.Hijri.Weekday.Ar
-		hijri = fmt.Sprintf(format, arWeekday, dayNum, arMonth, year)
+
+		if userOS == "windows" {
+			arWeekday = goarabic.Reverse(arWeekday)
+			arMonth = goarabic.Reverse(arMonth)
+			hijri = fmt.Sprintf(arformat, year, arMonth, dayNum, arWeekday)
+		} else {
+			hijri = fmt.Sprintf(enformat, arWeekday, dayNum, arMonth, year)
+		}
+
 	} else {
 		enMonth := aladhanTimes.Data.Date.Hijri.Month.En
 		year := aladhanTimes.Data.Date.Hijri.Year
 		enWeekday := aladhanTimes.Data.Date.Hijri.Weekday.En
-		hijri = fmt.Sprintf(format, enWeekday, dayNum, enMonth, year)
+		hijri = fmt.Sprintf(enformat, enWeekday, dayNum, enMonth, year)
 	}
 	return hijri
 }
@@ -53,7 +63,7 @@ func GetCurrentPrayers(prayers []Prayer) (prevPrayer Prayer, nextPrayer Prayer) 
 
 		if idx+1 == len(prayers) {
 			prevPrayer = Prayer{prevName, prevTime}
-			nextPrayer = Prayer{"Fajr", prayers[0].Time}
+			nextPrayer = Prayer{prayers[0].Name, prayers[0].Time}
 			return prevPrayer, nextPrayer
 		}
 
@@ -92,10 +102,9 @@ func CalculateTimeDiff(prevPrayer Prayer, prevTimeStr string, nextTimeStr string
 	prevTime := ConvertStringToTime(prevTimeStr)
 	nextTime := ConvertStringToTime(nextTimeStr)
 
-	timeDiff := nextTime.Sub(prevTime)
-
-	if prevPrayer.Name == "Isha" && nextTime.Before(prevTime) {
-		// Next prayer is tomorrow, add 24 hours
+	var timeDiff time.Duration
+	if nextTime.Before(prevTime) {
+		// Next prayer is on the following day
 		tomorrow := nextTime.Add(24 * time.Hour)
 		timeDiff = tomorrow.Sub(prevTime)
 	} else {

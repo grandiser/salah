@@ -3,12 +3,13 @@ package prayers
 import (
 	"flag"
 	"fmt"
-	"github.com/BurntSushi/toml"
 	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/BurntSushi/toml"
 )
 
 type Config struct {
@@ -75,10 +76,10 @@ func GetDefaultConfig() Config {
 }
 
 func ValidateConfig(config *Config) {
-	if runtime.GOOS == "windows" && config.UseArabic {
-		fmt.Fprintln(os.Stderr, "Warning: Arabic is not well supported on Windows.\nPlease change your config values.\nReverting to English.")
-		config.UseArabic = false
-	}
+	// if runtime.GOOS == "windows" && config.UseArabic {
+	// 	fmt.Fprintln(os.Stderr, "Warning: Arabic is not well supported on Windows.\nPlease change your config values.\nReverting to English.")
+	// 	config.UseArabic = false
+	// }
 
 	if config.CalculationMethod != "" {
 		userInputMethod := config.CalculationMethod
