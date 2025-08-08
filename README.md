@@ -125,8 +125,10 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 ## Display Examples
 |   |   |
 |---|---|
-| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/f69660ae-053d-41f4-9f39-25d39c410bc5" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/2e6828ed-6045-4ece-bb1b-637a3153feb9" /> |
-| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/1e5c663f-1ef0-4d50-b39f-4cb8fe01185b" /> |   |
+| <img width="542" height="372" alt="image" src="https://github.com/user-attachments/assets/acb700ca-2360-48a3-93f2-cd62243f88fe" />
+ | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/2e6828ed-6045-4ece-bb1b-637a3153feb9" /> |
+| <img width="542" height="372" alt="image" src="https://github.com/user-attachments/assets/202e7626-550b-4adc-b3ed-b4f5b3d2b2cb" />
+ |   |
 
 
 ---
