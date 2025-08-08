@@ -7,7 +7,7 @@
 Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 ---
-<img width="597" height="365" alt="image" src="https://github.com/user-attachments/assets/77590643-46c2-4a78-b2bf-83d625d09c61" />
+<img width="623" height="385" alt="image" src="https://github.com/user-attachments/assets/513d5624-93c0-4d82-80a2-f53a31623602" />
 
 ---
 
@@ -125,10 +125,11 @@ A config file is created at `~/.config/salah/salah.toml` (Linux/macOS) or `%AppD
 
 ## Display Examples
 
-|  |  |
+| | |
 |---|---|
-| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/081e86aa-da34-4cc3-b19e-cb2b8eb35ac6" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/87a70c8e-3f98-4a96-b696-84b44f3c72e1" /> |
-| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/b4ddfadf-f04f-41dd-b3da-486fa5930353" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/cc04cbe6-6245-4933-bfad-8f2322a5f298" /> |
+| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/f69660ae-053d-41f4-9f39-25d39c410bc5" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/3702dfd6-1517-4c2e-a411-c0b4b27f365a" /> |
+| <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/1e5c663f-1ef0-4d50-b39f-4cb8fe01185b" /> | <img width="486" height="286" alt="image" src="https://github.com/user-attachments/assets/d3e6d28d-9742-4662-800c-4b1a9de8c108" /> |
+
 
 ---
 
