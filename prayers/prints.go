@@ -22,7 +22,8 @@ func BasmalahFormatter(basmalah string) string {
 	case "linux":
 		return fmt.Sprintf("%-6s%s%-3s\n", "", basmalah, "")
 	case "windows":
-		return fmt.Sprintf("%-11s%s%-3s\n", "", basmalah, "")
+		basmalah = "بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم"
+		return fmt.Sprintf("%-2s%s\n\n", "", basmalah)
 	default:
 		return ""
 	}
@@ -38,7 +39,8 @@ func BasmalahPrinter(basmalahSprint string) {
 		whitePrint := color.New(color.FgHiWhite, color.Bold).PrintFunc()
 		whitePrint(basmalahSprint)
 	case "windows":
-		// basmalah looks weird on windows and doesnt line up in the middle of the table
+		whitePrint := color.New(color.FgHiWhite, color.Bold).PrintFunc()
+		whitePrint(basmalahSprint)
 		return
 
 	default:
