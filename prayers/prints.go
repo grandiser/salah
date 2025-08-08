@@ -27,7 +27,7 @@ func BasmalahFormatter(basmalah string) string {
 		return fmt.Sprintf("%-6s%s%-3s\n", "", basmalah, "")
 	case "windows":
 		basmalah = goarabic.Reverse("بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم")
-		return fmt.Sprintf("%-2s%s\n\n", "", basmalah)
+		return fmt.Sprintf("%-2s%s\n", "", basmalah)
 	default:
 		return ""
 	}
@@ -91,7 +91,8 @@ func LoaderFormatter(nextPrayerName string, loadingSquares string, timeRemaining
 		case "linux":
 			return fmt.Sprintf("%s %s %s %s %s\n", "", timeRemaining, loadingSquares, "القادم:", nextPrayerName)
 		case "windows":
-			return fmt.Sprintf("%s %s %s %s %s\n", "", timeRemaining, loadingSquares, "القادم:", nextPrayerName)
+			arNext := goarabic.Reverse("القادم:")
+			return fmt.Sprintf("%s %s %s %s %s\n", "", timeRemaining, loadingSquares, nextPrayerName, arNext)
 		default:
 			return ""
 		}
