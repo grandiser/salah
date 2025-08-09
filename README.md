@@ -17,7 +17,7 @@ Minimal, customizable, and neofetch-like Prayer Times CLI, written in Go
 
 - Automatic location detection
 - Accurate daily prayer times
-- Fast, single-binary CLI
+- English/Arabic Support
 - No API keys or personal data required
 - Hijri and Gregorian date support
 - Compact mode for minimal output
